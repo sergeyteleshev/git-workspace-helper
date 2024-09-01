@@ -1,7 +1,7 @@
 {
   "name": "workspaces-time-travel-machine",
   "displayName": "Workspaces time travel machine",
-  "description": "If your product is compiles from multiple repositories and you want to build it easy-peasy in a state of half ot the year ago, for exmaple. This extension is your choice to do it right",
+  "description": "Workspaces helper which helps to travel in time and see the state of your application in the past",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.92.0"
@@ -11,13 +11,37 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
+  "publisher": "stelesh",
+  "icon": "./icon.png",
   "contributes": {
     "commands": [
       {
-        "command": "workspaces-time-travel-machine.helloWorld",
-        "title": "Hello World"
+        "command": "workspaces-time-travel-machine.travel",
+        "title": "Workspaces time travel machine: Time Travel To Commit"
+      },
+      {
+        "command": "workspaces-time-travel-machine.travel-to-master",
+        "title": "Workspaces time travel machine: Time Travel To Master"
+      },
+      {
+        "command": "workspaces-time-travel-machine.pull",
+        "title": "Workspaces time travel machine: Pull All"
+      },
+      {
+        "command": "workspaces-time-travel-machine.discardChanges",
+        "title": "Workspaces time travel machine: Discard Changes"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Workspaces Time Travel Machine",
+      "properties": {
+        "workspaces-time-travel-machine.masterBranchName": {
+          "type": "string",
+          "default": "master",
+          "description": "Default branch for each repository. Used for \"Time Travel to Master\" command"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
@@ -34,16 +58,24 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.92.0",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
+    "@types/vscode": "^1.92.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.11.0",
-    "eslint": "^8.57.0",
-    "esbuild": "^0.21.5",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^5.4.5",
     "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.4.0"
+    "@vscode/test-electron": "^2.4.0",
+    "esbuild": "^0.21.5",
+    "eslint": "^8.57.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "3.3.3",
+    "typescript": "^5.4.5"
+  },
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0"
   }
 }
