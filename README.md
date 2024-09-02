@@ -1,3 +1,10 @@
+## How to use it
+
+- Open command palette (CMD/ctrl + shift + P)
+- Type "wttm"
+- See the available commands
+- Execute the one you need
+
 ## Features
 
 - Time Travel To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
@@ -11,7 +18,7 @@ Just simply execute: `yarn install` and you are ready to go
 
 ## Release Notes
 
-### 1.0.0
+### 0.0.1
 
 Initial release of the "Workspaces Time Travel Machine"
 
