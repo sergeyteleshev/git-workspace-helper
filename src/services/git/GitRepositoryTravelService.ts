@@ -30,6 +30,18 @@ export class GitRepositoryTravelService {
     }
   }
 
+  async travelByBranchName(branchName: string) {
+    for (const repo of this.gitService.API.repositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      this.repositoryGitService.goTo(name, branchName);
+    }
+  }
+
   async travelBySha(sha: string) {
     const initialRepoName =
       await this.repositoryGitService.getRepositoryNameByCommitSha(sha);

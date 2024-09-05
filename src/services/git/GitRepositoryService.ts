@@ -73,14 +73,14 @@ export class GitRepositoryService {
     return null;
   }
 
-  async goTo(repoName: string, sha: string) {
+  async goTo(repoName: string, candidate: string) {
     const repo = this.getRepository(repoName);
 
     if (!repo) {
       throw new Error('Repository not found');
     }
 
-    await repo.checkout(sha);
+    await repo.checkout(candidate);
   }
 
   async getCommitInfo(repoName: string, sha: string) {
