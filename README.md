@@ -33,3 +33,7 @@ Renamed extension
 Renamed Travel To Master -> Travel To Default Branch
 Cropped icon
 Grouped Time Travel features into one group
+
+# 0.1.3
+
+Fixes icon size
