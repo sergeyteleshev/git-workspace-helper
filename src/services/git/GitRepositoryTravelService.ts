@@ -12,13 +12,13 @@ export class GitRepositoryTravelService {
     @inject(GitService) private readonly gitService: GitService,
     @inject(SettingsService) private readonly settingsService: SettingsService
   ) {
-    this.travelToMaster = this.travelToMaster.bind(this);
+    this.travelToDefaultBranch = this.travelToDefaultBranch.bind(this);
     this.travelBySha = this.travelBySha.bind(this);
     this.pull = this.pull.bind(this);
     this.discardChanges = this.discardChanges.bind(this);
   }
 
-  async travelToMaster() {
+  async travelToDefaultBranch() {
     for (const repo of this.gitService.API.repositories) {
       const name = getRepositoryName(repo);
 

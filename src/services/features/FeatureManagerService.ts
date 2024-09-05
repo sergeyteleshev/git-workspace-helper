@@ -1,14 +1,12 @@
 import vscode from 'vscode';
-import { travel } from '../../features/travel';
-import { travelToMaster } from '../../features/travelToMaster';
 import { pull } from '../../features/pull';
 import { discardChanges } from '../../features/discardChanges';
+import { travel } from '../../features/travel';
 
 const ACTIONS: [string, () => void][] = [
-  ['workspaces-time-travel-machine.travel', travel],
-  ['workspaces-time-travel-machine.travel-to-master', travelToMaster],
-  ['workspaces-time-travel-machine.pull', pull],
-  ['workspaces-time-travel-machine.discardChanges', discardChanges],
+  ['workspace-time-travel-machine.travel', travel],
+  ['workspace-time-travel-machine.pull', pull],
+  ['workspace-time-travel-machine.discardChanges', discardChanges],
 ];
 
 export class FeatureManagerService {

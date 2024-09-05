@@ -6,11 +6,13 @@ import { isSha } from '../helpers/isSha';
 enum TravelType {
   BranchName = 'By branch name',
   CommitSha = 'By commit SHA',
+  DefaultBranch = 'To default branch',
 }
 
 const TRAVEL_OPTIONS: TravelType[] = [
   TravelType.BranchName,
   TravelType.CommitSha,
+  TravelType.DefaultBranch,
 ];
 
 async function travelByBranchName() {
@@ -58,6 +60,15 @@ async function travelBySha() {
   gitRepositoryTravelService.travelBySha(shaCandidate);
 }
 
+export async function travelToDefaultBranch() {
+  const dIContainerService = new DIContainerService();
+  const gitRepositoryTravelService = dIContainerService.getByClassName(
+    GitRepositoryTravelService
+  );
+
+  gitRepositoryTravelService.travelToDefaultBranch();
+}
+
 export async function travel() {
   const result = await vscode.window.showQuickPick(TRAVEL_OPTIONS);
 
@@ -73,6 +84,11 @@ export async function travel() {
 
   if (result === TravelType.CommitSha) {
     travelBySha();
+    return;
+  }
+
+  if (result === TravelType.DefaultBranch) {
+    travelToDefaultBranch();
     return;
   }
 }

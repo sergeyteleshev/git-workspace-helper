@@ -8,7 +8,8 @@
 ## Features
 
 - Time Travel To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
-- Time Travel To Master - switches each repository to the default branches. The default branch can be configured in VSCode settings
+- Time Travel To Branch - switches repository to the specific branch. If branch is not found it stays as it is.
+- Time Travel To Default Branch - switches each repository to the default branches. The default branch can be configured in VSCode settings
 - Pull all - Pulls coming code in each repository
 - Discard changes - Discard changes in each repository
 
@@ -20,12 +21,15 @@ Just simply execute: `yarn install` and you are ready to go
 
 ### 0.0.1
 
-Initial release of the "Workspaces Time Travel Machine"
+Initial release of the "Workspace Time Travel Machine"
 
-#### Features
+### 0.1.1
 
-- Time Travel To Commit
-- Time Travel To Master
-- Default branch settings
-- Pull all
-- Discard changes
+Added travel by branch name
+
+### 0.1.2
+
+Renamed extension
+Renamed Travel To Master -> Travel To Default Branch
+Cropped icon
+Grouped Time Travel features into one group

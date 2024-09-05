@@ -7,6 +7,7 @@ const diContainerService = new DIContainerService();
 
 export function activate(context: vscode.ExtensionContext) {
   diContainerService.run();
+
   const featureManagerService =
     diContainerService.getByClassName<FeatureManagerService>(
       FeatureManagerService

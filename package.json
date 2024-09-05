@@ -1,8 +1,8 @@
 {
-  "name": "workspaces-time-travel-machine",
-  "displayName": "Workspaces time travel machine",
-  "description": "Workspaces helper which helps to travel in time and see the state of your application in the past",
-  "version": "0.1.1",
+  "name": "workspace-time-travel-machine",
+  "displayName": "Workspace time travel machine",
+  "description": "Workspace helper which helps to travel in time and see the state of your application in the past",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -16,26 +16,22 @@
   "contributes": {
     "commands": [
       {
-        "command": "workspaces-time-travel-machine.travel",
-        "title": "Workspaces time travel machine: Time Travel"
+        "command": "workspace-time-travel-machine.travel",
+        "title": "Workspace Time Travel Machine: Time Travel"
       },
       {
-        "command": "workspaces-time-travel-machine.travel-to-master",
-        "title": "Workspaces time travel machine: Time Travel To Master"
+        "command": "workspace-time-travel-machine.pull",
+        "title": "Workspace Time Travel Machine: Pull All"
       },
       {
-        "command": "workspaces-time-travel-machine.pull",
-        "title": "Workspaces time travel machine: Pull All"
-      },
-      {
-        "command": "workspaces-time-travel-machine.discardChanges",
-        "title": "Workspaces time travel machine: Discard Changes"
+        "command": "workspace-time-travel-machine.discardChanges",
+        "title": "Workspace Time Travel Machine: Discard Changes"
       }
     ],
     "configuration": {
-      "title": "Workspaces Time Travel Machine",
+      "title": "Workspace Time Travel Machine",
       "properties": {
-        "workspaces-time-travel-machine.masterBranchName": {
+        "workspace-time-travel-machine.defaultBranchName": {
           "type": "string",
           "default": "master",
           "description": "Default branch for each repository. Used for \"Time Travel to Master\" command"
