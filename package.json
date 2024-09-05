@@ -2,7 +2,7 @@
   "name": "workspaces-time-travel-machine",
   "displayName": "Workspaces time travel machine",
   "description": "Workspaces helper which helps to travel in time and see the state of your application in the past",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "workspaces-time-travel-machine.travel",
-        "title": "Workspaces time travel machine: Time Travel To Commit"
+        "title": "Workspaces time travel machine: Time Travel"
       },
       {
         "command": "workspaces-time-travel-machine.travel-to-master",

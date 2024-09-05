@@ -3,7 +3,37 @@ import { GitRepositoryTravelService } from '../services/git/GitRepositoryTravelS
 import { DIContainerService } from '../DI/DIContainer';
 import { isSha } from '../helpers/isSha';
 
-export async function travel() {
+enum TravelType {
+  BranchName = 'By branch name',
+  CommitSha = 'By commit SHA',
+}
+
+const TRAVEL_OPTIONS: TravelType[] = [
+  TravelType.BranchName,
+  TravelType.CommitSha,
+];
+
+async function travelByBranchName() {
+  const dIContainerService = new DIContainerService();
+  const gitRepositoryTravelService = dIContainerService.getByClassName(
+    GitRepositoryTravelService
+  );
+
+  const branchNameCandidate = (
+    await vscode.window.showInputBox({
+      placeHolder: 'Enter branch name',
+      title: 'Branch name',
+    })
+  )?.trim();
+
+  if (!branchNameCandidate) {
+    return;
+  }
+
+  gitRepositoryTravelService.travelByBranchName(branchNameCandidate);
+}
+
+async function travelBySha() {
   const dIContainerService = new DIContainerService();
   const gitRepositoryTravelService = dIContainerService.getByClassName(
     GitRepositoryTravelService
@@ -26,4 +56,23 @@ export async function travel() {
   }
 
   gitRepositoryTravelService.travelBySha(shaCandidate);
+}
+
+export async function travel() {
+  const result = await vscode.window.showQuickPick(TRAVEL_OPTIONS);
+
+  if (!result) {
+    vscode.window.showErrorMessage('Invalid option');
+    return;
+  }
+
+  if (result === TravelType.BranchName) {
+    travelByBranchName();
+    return;
+  }
+
+  if (result === TravelType.CommitSha) {
+    travelBySha();
+    return;
+  }
 }
