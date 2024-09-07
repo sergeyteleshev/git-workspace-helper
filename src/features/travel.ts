@@ -73,7 +73,6 @@ export async function travel() {
   const result = await vscode.window.showQuickPick(TRAVEL_OPTIONS);
 
   if (!result) {
-    vscode.window.showErrorMessage('Invalid option');
     return;
   }
 
