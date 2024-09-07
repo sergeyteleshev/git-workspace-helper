@@ -1,12 +1,13 @@
 import { DIContainerService } from '../DI/DIContainer';
-import { GitRepositoryTravelService } from '../services/git/GitRepositoryTravelService';
+import { GitRepositoriesService } from '../services/git/GitRepositoriesService';
 import vscode from 'vscode';
 
 export async function discardChanges() {
   const diContainerService = new DIContainerService();
-  const gitRepositoryTravelService = diContainerService.getByClassName(
-    GitRepositoryTravelService
-  );
+  const gitRepositoriesService =
+    diContainerService.getByClassName<GitRepositoriesService>(
+      GitRepositoriesService
+    );
 
   const shouldDelete = await vscode.window.showQuickPick(['Yes', 'No'], {
     title: 'Discard changes',
@@ -14,6 +15,6 @@ export async function discardChanges() {
   });
 
   if (shouldDelete === 'Yes') {
-    gitRepositoryTravelService.discardChanges();
+    gitRepositoriesService.discardChanges();
   }
 }

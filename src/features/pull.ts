@@ -1,12 +1,12 @@
 import { DIContainerService } from '../DI/DIContainer';
-import { GitRepositoryTravelService } from '../services/git/GitRepositoryTravelService';
+import { GitRepositoriesService } from '../services/git/GitRepositoriesService';
 
 export function pull() {
   const diContainerService = new DIContainerService();
-  const gitRepositoryTravelService =
-    diContainerService.getByClassName<GitRepositoryTravelService>(
-      GitRepositoryTravelService
+  const gitRepositoriesService =
+    diContainerService.getByClassName<GitRepositoriesService>(
+      GitRepositoriesService
     );
 
-  gitRepositoryTravelService.pull();
+  gitRepositoriesService.pull();
 }
