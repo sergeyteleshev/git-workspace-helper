@@ -1,20 +1,22 @@
+import vscode from 'vscode';
 import { DIContainerService } from '../DI/DIContainer';
 import { GitRepositoriesService } from '../services/git/GitRepositoriesService';
-import vscode from 'vscode';
 
-export async function discardChanges() {
+export async function merge() {
   const diContainerService = new DIContainerService();
   const gitRepositoriesService =
     diContainerService.getByClassName<GitRepositoriesService>(
       GitRepositoriesService
     );
 
-  const shouldDelete = await vscode.window.showQuickPick(['Yes', 'No'], {
-    title: 'Discard changes',
-    placeHolder: 'All of the changes will be removed. Are you sure?',
+  const branchName = await vscode.window.showInputBox({
+    title: 'Merge to current branch',
+    placeHolder: 'Enter branch name you want to merge to current branch',
   });
 
-  if (shouldDelete === 'Yes') {
-    gitRepositoriesService.discardChanges();
+  if (!branchName) {
+    return;
   }
+
+  gitRepositoriesService.merge(branchName);
 }

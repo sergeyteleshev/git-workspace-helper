@@ -14,8 +14,6 @@ export class GitRepositoryTravelService {
   ) {
     this.travelToDefaultBranch = this.travelToDefaultBranch.bind(this);
     this.travelBySha = this.travelBySha.bind(this);
-    this.pull = this.pull.bind(this);
-    this.discardChanges = this.discardChanges.bind(this);
   }
 
   async travelToDefaultBranch() {
@@ -74,30 +72,6 @@ export class GitRepositoryTravelService {
       if (commit) {
         this.repositoryGitService.goTo(repoName, commit.hash);
       }
-    }
-  }
-
-  async pull() {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      this.repositoryGitService.pull(name);
-    }
-  }
-
-  async discardChanges() {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      this.repositoryGitService.discardChanges(name);
     }
   }
 }
