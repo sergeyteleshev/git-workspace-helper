@@ -51,4 +51,28 @@ export class GitRepositoriesService {
       } catch {}
     }
   }
+
+  async commit(name: string) {
+    for (const repo of this.gitService.API.repositories) {
+      const repoName = getRepositoryName(repo);
+
+      if (!repoName) {
+        continue;
+      }
+
+      this.repositoryGitService.commit(repoName, name);
+    }
+  }
+
+  async push() {
+    for (const repo of this.gitService.API.repositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      this.repositoryGitService.push(name);
+    }
+  }
 }
