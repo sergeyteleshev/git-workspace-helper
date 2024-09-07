@@ -11,6 +11,7 @@
 - Time Travel To Branch - switches repository to the specific branch. If branch is not found it stays as it is.
 - Time Travel To Default Branch - switches each repository to the default branches. The default branch can be configured in VSCode settings
 - Pull all - Pulls coming code in each repository
+- Merge all - Merges branch by name to all repositories current branch
 - Discard changes - Discard changes in each repository
 
 ## Install
