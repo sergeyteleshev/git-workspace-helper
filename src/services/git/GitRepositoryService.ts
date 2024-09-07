@@ -113,4 +113,28 @@ export class GitRepositoryService {
     repo.checkout('.');
     repo.clean(['-f']);
   }
+
+  async merge(repoName: string, branchName: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    const currentBranchName = repo.state.HEAD?.name;
+
+    if (currentBranchName === branchName) {
+      return;
+    }
+
+    try {
+      const branch = await repo.getBranch(branchName);
+
+      if (!branch.name) {
+        return;
+      }
+
+      await repo.merge(branch.name);
+    } catch {}
+  }
 }

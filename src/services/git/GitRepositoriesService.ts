@@ -37,4 +37,18 @@ export class GitRepositoriesService {
       this.repositoryGitService.discardChanges(name);
     }
   }
+
+  async merge(branchName: string) {
+    for (const repo of this.gitService.API.repositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      try {
+        this.repositoryGitService.merge(name, branchName);
+      } catch {}
+    }
+  }
 }

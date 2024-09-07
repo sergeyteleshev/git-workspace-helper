@@ -24,6 +24,10 @@
         "title": "Workspace Time Travel Machine: Pull All"
       },
       {
+        "command": "workspace-time-travel-machine.merge",
+        "title": "Workspace Time Travel Machine: Merge All"
+      },
+      {
         "command": "workspace-time-travel-machine.discardChanges",
         "title": "Workspace Time Travel Machine: Discard Changes"
       }
