@@ -37,3 +37,7 @@ Grouped Time Travel features into one group
 # 0.1.3
 
 Fixes icon size
+
+# 0.1.4
+
+Added "Merge All" feature
