@@ -10,8 +10,8 @@ export async function merge() {
     );
 
   const branchName = await vscode.window.showInputBox({
-    title: 'Merge',
-    placeHolder: 'Enter the branch name you want to merge',
+    title: 'Merge to current branch',
+    placeHolder: 'Enter branch name you want to merge to current branch',
   });
 
   if (!branchName) {

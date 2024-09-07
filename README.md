@@ -41,3 +41,5 @@ Fixes icon size
 # 0.1.4
 
 Added "Merge All" feature
+Added ability to Discard changes for staged files
+Removed "Invalid option" error
