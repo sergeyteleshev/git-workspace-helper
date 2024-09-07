@@ -162,4 +162,24 @@ export class GitRepositoryService {
       await repo.merge(branch.name);
     } catch {}
   }
+
+  commit(repoName: string, name: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    repo.commit(name);
+  }
+
+  push(name: string) {
+    const repo = this.getRepository(name);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    repo.push();
+  }
 }
