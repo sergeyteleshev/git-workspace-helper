@@ -36,6 +36,10 @@
         "title": "Workspace Time Travel Machine: Stage Changes"
       },
       {
+        "command": "workspace-time-travel-machine.unstageChanges",
+        "title": "Workspace Time Travel Machine: Unstage Changes"
+      },
+      {
         "command": "workspace-time-travel-machine.commit",
         "title": "Workspace Time Travel Machine: Commit Changes"
       },
