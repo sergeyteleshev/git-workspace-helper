@@ -119,6 +119,23 @@ export class GitRepositoryService {
     await repo.revert(stagedAll);
   }
 
+  async stageChanges(name: string) {
+    const repo = this.getRepository(name);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    const diffWithIndexHead = await repo.diffIndexWithHEAD();
+    const unstaged = diffWithIndexHead.map((change) => change.uri.fsPath);
+    const unstagedRenamed = diffWithIndexHead
+      .map((change) => change.renameUri?.fsPath)
+      .filter((path) => typeof path === 'string');
+    const unstagedAll = [...new Set([...unstaged, ...unstagedRenamed])];
+
+    await repo.add(unstagedAll);
+  }
+
   async discardChanges(name: string) {
     const repo = this.getRepository(name);
 

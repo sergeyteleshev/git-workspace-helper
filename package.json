@@ -32,6 +32,10 @@
         "title": "Workspace Time Travel Machine: Discard Changes"
       },
       {
+        "command": "workspace-time-travel-machine.stageChanges",
+        "title": "Workspace Time Travel Machine: Stage Changes"
+      },
+      {
         "command": "workspace-time-travel-machine.commit",
         "title": "Workspace Time Travel Machine: Commit Changes"
       },
