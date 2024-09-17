@@ -52,3 +52,8 @@ vAdded travel by branch name
 - Added "Commit Changes" feature
 - Added "Push All Commits" feature
 - Fixed readme
+
+### 0.1.6
+
+- Added Stage Changes
+- Added Unstage Changes
