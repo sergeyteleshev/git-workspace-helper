@@ -6,6 +6,12 @@ import { FeatureManagerService } from './services/features/FeatureManagerService
 const diContainerService = new DIContainerService();
 
 export function activate(context: vscode.ExtensionContext) {
+  const isWorkspace = vscode.workspace.workspaceFolders?.length;
+
+  if (!isWorkspace) {
+    return;
+  }
+
   diContainerService.run();
 
   const featureManagerService =
