@@ -2,7 +2,7 @@
   "name": "workspace-time-travel-machine",
   "displayName": "Workspace time travel machine",
   "description": "Workspace helper which helps to travel in time and see the state of your application in the past",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -30,6 +30,14 @@
       {
         "command": "workspace-time-travel-machine.discardChanges",
         "title": "Workspace Time Travel Machine: Discard Changes"
+      },
+      {
+        "command": "workspace-time-travel-machine.stageChanges",
+        "title": "Workspace Time Travel Machine: Stage Changes"
+      },
+      {
+        "command": "workspace-time-travel-machine.unstageChanges",
+        "title": "Workspace Time Travel Machine: Unstage Changes"
       },
       {
         "command": "workspace-time-travel-machine.commit",

@@ -38,6 +38,30 @@ export class GitRepositoriesService {
     }
   }
 
+  async stageChanges() {
+    for (const repo of this.gitService.API.repositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      this.repositoryGitService.stageChanges(name);
+    }
+  }
+
+  async unstageChanges() {
+    for (const repo of this.gitService.API.repositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      this.repositoryGitService.unstageChanges(name);
+    }
+  }
+
   async merge(branchName: string) {
     for (const repo of this.gitService.API.repositories) {
       const name = getRepositoryName(repo);
