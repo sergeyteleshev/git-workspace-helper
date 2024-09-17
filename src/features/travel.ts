@@ -20,13 +20,12 @@ async function travelByBranchName() {
   const gitRepositoryTravelService = dIContainerService.getByClassName(
     GitRepositoryTravelService
   );
+  const branchesNames = await gitRepositoryTravelService.getBranchesNames();
 
-  const branchNameCandidate = (
-    await vscode.window.showInputBox({
-      placeHolder: 'Enter branch name',
-      title: 'Branch name',
-    })
-  )?.trim();
+  const branchNameCandidate = await vscode.window.showQuickPick(branchesNames, {
+    placeHolder: 'Enter branch name',
+    title: 'Branch name',
+  });
 
   if (!branchNameCandidate) {
     return;

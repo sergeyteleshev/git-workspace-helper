@@ -18,6 +18,18 @@ export class GitRepositoryService {
     );
   }
 
+  async getBranches(name: string) {
+    const repo = this.getRepository(name);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    return repo.getBranches({
+      sort: 'committerdate',
+    });
+  }
+
   async findClosestCommitByDate(repoName: string, date: Date) {
     const repo = this.getRepository(repoName);
     let minDifference = Number.MAX_SAFE_INTEGER;
