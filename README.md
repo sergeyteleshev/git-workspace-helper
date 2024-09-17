@@ -15,6 +15,8 @@
 - Discard Changes - Discard changes in each repository
 - Commit All - Commits all staged files in each repository
 - Push All - Pushes all commits in each repository
+- Stage All - Stages all changes in each repository
+- Unstage All - Unstages all changes in each repository
 
 ## Install
 
