@@ -40,6 +40,28 @@ export class GitRepositoryTravelService {
     }
   }
 
+  async getBranchesNames() {
+    const branchesNames = new Set<string>();
+
+    for (const repo of this.gitService.API.repositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      const branches = await this.repositoryGitService.getBranches(name);
+
+      for (const branch of branches) {
+        if (branch.name) {
+          branchesNames.add(branch.name);
+        }
+      }
+    }
+
+    return Array.from(branchesNames);
+  }
+
   async travelBySha(sha: string) {
     const initialRepoName =
       await this.repositoryGitService.getRepositoryNameByCommitSha(sha);

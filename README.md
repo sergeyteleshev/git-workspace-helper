@@ -59,3 +59,7 @@ vAdded travel by branch name
 
 - Added Stage Changes
 - Added Unstage Changes
+
+### 0.1.7
+
+- Improves branch picker in "Time Travel By Branch Name" feature
