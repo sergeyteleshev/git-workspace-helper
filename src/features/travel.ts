@@ -2,6 +2,7 @@ import vscode from 'vscode';
 import { GitRepositoryTravelService } from '../services/git/GitRepositoryTravelService';
 import { DIContainerService } from '../DI/DIContainer';
 import { isSha } from '../helpers/isSha';
+import { GitRepositoriesBranchService } from '../services/git/GitRepositoriesBranchService';
 
 enum TravelType {
   BranchName = 'By branch name',
@@ -20,7 +21,10 @@ async function travelByBranchName() {
   const gitRepositoryTravelService = dIContainerService.getByClassName(
     GitRepositoryTravelService
   );
-  const branchesNames = await gitRepositoryTravelService.getBranchesNames();
+  const gitRepositoriesBranchService = dIContainerService.getByClassName(
+    GitRepositoriesBranchService
+  );
+  const branchesNames = await gitRepositoriesBranchService.getBranchesNames();
 
   const branchNameCandidate = await vscode.window.showQuickPick(branchesNames, {
     placeHolder: 'Enter branch name',

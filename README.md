@@ -63,3 +63,7 @@ vAdded travel by branch name
 ### 0.1.7
 
 - Improves branch picker in "Time Travel By Branch Name" feature
+
+### 0.1.8
+
+- Fixes remote branch switching for "Time Travel By Branch Name" feature

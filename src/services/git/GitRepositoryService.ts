@@ -27,6 +27,7 @@ export class GitRepositoryService {
 
     return repo.getBranches({
       sort: 'committerdate',
+      remote: true,
     });
   }
 

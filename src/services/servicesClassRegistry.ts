@@ -5,6 +5,7 @@ import { GitRepositoryTravelService } from './git/GitRepositoryTravelService';
 import { SettingsService } from './settings/SettingsService';
 import { FeatureManagerService } from './features/FeatureManagerService';
 import { GitRepositoriesService } from './git/GitRepositoriesService';
+import { GitRepositoriesBranchService } from './git/GitRepositoriesBranchService';
 
 export const SERVICES_CLASS_REGISTRY: InjectionToken<any>[] = [
   GitService,
@@ -13,4 +14,5 @@ export const SERVICES_CLASS_REGISTRY: InjectionToken<any>[] = [
   SettingsService,
   FeatureManagerService,
   GitRepositoriesService,
+  GitRepositoriesBranchService,
 ];

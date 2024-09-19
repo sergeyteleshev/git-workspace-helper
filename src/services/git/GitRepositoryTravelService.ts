@@ -4,6 +4,8 @@ import { GitService } from './GitService';
 import { SettingsService } from '../settings/SettingsService';
 import { getRepositoryName } from '../../helpers/getRepositoryName';
 
+const ORIGIN_PREFIX = 'origin/';
+
 @singleton()
 export class GitRepositoryTravelService {
   constructor(
@@ -38,28 +40,6 @@ export class GitRepositoryTravelService {
 
       this.repositoryGitService.goTo(name, branchName);
     }
-  }
-
-  async getBranchesNames() {
-    const branchesNames = new Set<string>();
-
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      const branches = await this.repositoryGitService.getBranches(name);
-
-      for (const branch of branches) {
-        if (branch.name) {
-          branchesNames.add(branch.name);
-        }
-      }
-    }
-
-    return Array.from(branchesNames);
   }
 
   async travelBySha(sha: string) {
