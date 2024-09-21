@@ -10,14 +10,11 @@ export class CustomQuickPick {
     this.setItems = this.setItems.bind(this);
     this.selectMany = this.selectMany.bind(this);
     this.setSelectedItems = this.setSelectedItems.bind(this);
+    this.dispose = this.dispose.bind(this);
   }
 
   dispose() {
     this.quickPick.dispose();
-  }
-
-  private getSelectedItemsLabels() {
-    return this.quickPick.selectedItems.map((item) => item.label);
   }
 
   async show(): Promise<string[] | null> {
@@ -26,7 +23,7 @@ export class CustomQuickPick {
 
       this.quickPick.onDidAccept(() => {
         this.hide();
-        resolve(this.getSelectedItemsLabels());
+        resolve(this.quickPick.selectedItems.map((item) => item.label));
       });
 
       this.quickPick.onDidHide(() => {
