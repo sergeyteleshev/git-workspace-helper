@@ -46,6 +46,10 @@
       {
         "command": "workspace-time-travel-machine.push",
         "title": "Workspace Time Travel Machine: Push All Commits"
+      },
+      {
+        "command": "workspace-time-travel-machine.configureActiveRepositories",
+        "title": "Workspace Time Travel Machine: Configure Active Repositories"
       }
     ],
     "configuration": {

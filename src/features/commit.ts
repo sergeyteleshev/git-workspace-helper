@@ -1,12 +1,13 @@
 import vscode from 'vscode';
 import { DIContainerService } from '../DI/DIContainer';
-import { GitRepositoriesService } from '../services/git/GitRepositoriesService';
+import { GitRepositoriesActionsService } from '../services/git/GitRepositoriesActionsService';
+import { FeatureAction } from '../types/feature';
 
-export async function commit() {
+export const commit: FeatureAction = async () => {
   const diContainerService = new DIContainerService();
   const gitRepositoriesService =
-    diContainerService.getByClassName<GitRepositoriesService>(
-      GitRepositoriesService
+    diContainerService.getByClassName<GitRepositoriesActionsService>(
+      GitRepositoriesActionsService
     );
 
   const commitName = (
@@ -21,4 +22,4 @@ export async function commit() {
   }
 
   gitRepositoriesService.commit(commitName);
-}
+};

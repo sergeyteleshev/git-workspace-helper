@@ -1,102 +1,66 @@
 import { inject, injectable } from 'tsyringe';
-import { GitRepositoryService } from './GitRepositoryService';
 import { GitService } from './GitService';
+import { WorkSpaceCacheService } from '../WorkspaceCacheService';
 import { getRepositoryName } from '../../helpers/getRepositoryName';
+import { isNotNullDefined } from '../../helpers/isNotNullDefined';
+
+export const ACTIVE_REPOSITORIES_CACHE_KEY = 'ACTIVE_REPOSITORIES';
 
 @injectable()
 export class GitRepositoriesService {
   constructor(
-    @inject(GitRepositoryService)
-    private readonly repositoryGitService: GitRepositoryService,
-    @inject(GitService) private readonly gitService: GitService
+    @inject(GitService) private readonly gitService: GitService,
+    @inject(WorkSpaceCacheService)
+    private readonly workspaceCacheService: WorkSpaceCacheService
   ) {
-    this.pull = this.pull.bind(this);
-    this.discardChanges = this.discardChanges.bind(this);
+    this.setActiveRepositories = this.setActiveRepositories.bind(this);
+    this.restoreDefaultActiveRepositories =
+      this.restoreDefaultActiveRepositories.bind(this);
+
+    this.restoreDefaultActiveRepositories();
   }
 
-  async pull() {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      this.repositoryGitService.pull(name);
+  private restoreDefaultActiveRepositories() {
+    if (this.workspaceCacheService.has(ACTIVE_REPOSITORIES_CACHE_KEY)) {
+      return;
     }
-  }
 
-  async discardChanges() {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
+    const names = this.repositories
+      .map(getRepositoryName)
+      .filter(isNotNullDefined);
 
-      if (!name) {
-        continue;
-      }
-
-      this.repositoryGitService.discardChanges(name);
+    if (!names.length) {
+      return;
     }
+
+    this.setActiveRepositories(names);
   }
 
-  async stageChanges() {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      this.repositoryGitService.stageChanges(name);
-    }
+  get repositories() {
+    return this.gitService.API.repositories ?? [];
   }
 
-  async unstageChanges() {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
+  get activeRepositories() {
+    const names = new Set(
+      this.workspaceCacheService.get<string[]>(ACTIVE_REPOSITORIES_CACHE_KEY) ??
+        []
+    );
 
-      if (!name) {
-        continue;
-      }
-
-      this.repositoryGitService.unstageChanges(name);
-    }
-  }
-
-  async merge(branchName: string) {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      try {
-        this.repositoryGitService.merge(name, branchName);
-      } catch {}
-    }
-  }
-
-  async commit(name: string) {
-    for (const repo of this.gitService.API.repositories) {
+    return this.repositories.filter((repo) => {
       const repoName = getRepositoryName(repo);
 
       if (!repoName) {
-        continue;
+        return false;
       }
 
-      this.repositoryGitService.commit(repoName, name);
-    }
+      return names.has(repoName);
+    });
   }
 
-  async push() {
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      this.repositoryGitService.push(name);
-    }
+  setActiveRepositories(repositoriesNames: string[]) {
+    this.workspaceCacheService.set(
+      ACTIVE_REPOSITORIES_CACHE_KEY,
+      repositoriesNames
+    );
   }
 }

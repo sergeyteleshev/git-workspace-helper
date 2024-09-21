@@ -3,6 +3,7 @@ import { GitRepositoryTravelService } from '../services/git/GitRepositoryTravelS
 import { DIContainerService } from '../DI/DIContainer';
 import { isSha } from '../helpers/isSha';
 import { GitRepositoriesBranchService } from '../services/git/GitRepositoriesBranchService';
+import { FeatureAction } from '../types/feature';
 
 enum TravelType {
   BranchName = 'By branch name',
@@ -72,7 +73,7 @@ export async function travelToDefaultBranch() {
   gitRepositoryTravelService.travelToDefaultBranch();
 }
 
-export async function travel() {
+export const travel: FeatureAction = async (context) => {
   const result = await vscode.window.showQuickPick(TRAVEL_OPTIONS);
 
   if (!result) {
@@ -93,4 +94,4 @@ export async function travel() {
     travelToDefaultBranch();
     return;
   }
-}
+};

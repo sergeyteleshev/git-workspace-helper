@@ -2,15 +2,16 @@ import 'reflect-metadata';
 import * as vscode from 'vscode';
 import { DIContainerService } from './DI/DIContainer';
 import { FeatureManagerService } from './services/features/FeatureManagerService';
+import { VscodeContextService } from './services/VscodeContextService';
 
 const diContainerService = new DIContainerService();
 
 export function activate(context: vscode.ExtensionContext) {
-  const isWorkspace = vscode.workspace.workspaceFolders?.length;
-
-  if (!isWorkspace) {
+  if (!vscode.workspace.workspaceFolders?.length) {
     return;
   }
+
+  VscodeContextService.context = context;
 
   diContainerService.run();
 

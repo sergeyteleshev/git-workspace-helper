@@ -1,12 +1,13 @@
 import { DIContainerService } from '../DI/DIContainer';
-import { GitRepositoriesService } from '../services/git/GitRepositoriesService';
+import { GitRepositoriesActionsService } from '../services/git/GitRepositoriesActionsService';
+import { FeatureAction } from '../types/feature';
 
-export function pull() {
+export const pull: FeatureAction = (context) => {
   const diContainerService = new DIContainerService();
   const gitRepositoriesService =
-    diContainerService.getByClassName<GitRepositoriesService>(
-      GitRepositoriesService
+    diContainerService.getByClassName<GitRepositoriesActionsService>(
+      GitRepositoriesActionsService
     );
 
   gitRepositoriesService.pull();
-}
+};

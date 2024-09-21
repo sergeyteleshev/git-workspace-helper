@@ -1,12 +1,13 @@
 import { DIContainerService } from '../DI/DIContainer';
-import { GitRepositoriesService } from '../services/git/GitRepositoriesService';
+import { GitRepositoriesActionsService } from '../services/git/GitRepositoriesActionsService';
+import { FeatureAction } from '../types/feature';
 
-export async function stageChanges() {
+export const stageChanges: FeatureAction = async (context) => {
   const diContainerService = new DIContainerService();
   const gitRepositoriesService =
-    diContainerService.getByClassName<GitRepositoriesService>(
-      GitRepositoriesService
+    diContainerService.getByClassName<GitRepositoriesActionsService>(
+      GitRepositoriesActionsService
     );
 
   gitRepositoriesService.stageChanges();
-}
+};

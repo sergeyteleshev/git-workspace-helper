@@ -7,8 +7,11 @@ import { commit } from '../../features/commit';
 import { push } from '../../features/push';
 import { stageChanges } from '../../features/stageChanges';
 import { unstageChanges } from '../../features/unstageChanges';
+import { configureActiveRepositories } from '../../features/configureActiveRepositories';
+import { FeatureAction } from '../../types/feature';
+import { injectable } from 'tsyringe';
 
-const ACTIONS: [string, () => void][] = [
+const ACTIONS: [string, FeatureAction][] = [
   ['workspace-time-travel-machine.travel', travel],
   ['workspace-time-travel-machine.pull', pull],
   ['workspace-time-travel-machine.merge', merge],
@@ -17,8 +20,13 @@ const ACTIONS: [string, () => void][] = [
   ['workspace-time-travel-machine.unstageChanges', unstageChanges],
   ['workspace-time-travel-machine.commit', commit],
   ['workspace-time-travel-machine.push', push],
+  [
+    'workspace-time-travel-machine.configureActiveRepositories',
+    configureActiveRepositories,
+  ],
 ];
 
+@injectable()
 export class FeatureManagerService {
   constructor() {
     this.register = this.register.bind(this);
@@ -27,7 +35,7 @@ export class FeatureManagerService {
   register(context: vscode.ExtensionContext) {
     ACTIONS.forEach(([command, action]) => {
       context.subscriptions.push(
-        vscode.commands.registerCommand(command, action)
+        vscode.commands.registerCommand(command, () => action(context))
       );
     });
   }
