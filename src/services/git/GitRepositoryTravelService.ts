@@ -53,6 +53,16 @@ export class GitRepositoryTravelService {
       throw new Error('Repository not found');
     }
 
+    if (
+      !this.gitRepositoriesService.activeRepositories
+        .map(getRepositoryName)
+        .includes(initialRepoName)
+    ) {
+      throw new Error(
+        'Current repository is not active. Please activate it via the command palette'
+      );
+    }
+
     const restRepos = this.gitRepositoriesService.activeRepositories.filter(
       (repo) => getRepositoryName(repo) !== initialRepoName
     );
