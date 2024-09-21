@@ -10,6 +10,7 @@
 - Time Travel To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
 - Time Travel To Branch - switches repository to the specific branch. If branch is not found it stays as it is.
 - Time Travel To Default Branch - switches each repository to the default branches. The default branch can be configured in VSCode settings
+- Configure Active Repositories - Sets active repositories which will be used for other listed commands. By default all repositories in workspace are selected
 - Pull All - Pulls coming code in each repository
 - Merge All - Merges branch by name to all repositories current branch
 - Discard Changes - Discard changes in each repository
@@ -30,7 +31,7 @@ Just simply execute: `yarn install` and you are ready to go
 
 ### 0.1.1
 
-vAdded travel by branch name
+- Added travel by branch name
 
 ### 0.1.2
 
@@ -63,3 +64,8 @@ vAdded travel by branch name
 ### 0.1.7
 
 - Improves branch picker in "Time Travel By Branch Name" feature
+
+### 0.1.8
+
+- Fixes remote branch switching for "Time Travel By Branch Name" feature
+- Adds feature "Configure Active Repositories"

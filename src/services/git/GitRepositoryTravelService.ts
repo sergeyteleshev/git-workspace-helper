@@ -3,6 +3,9 @@ import { GitRepositoryService } from './GitRepositoryService';
 import { GitService } from './GitService';
 import { SettingsService } from '../settings/SettingsService';
 import { getRepositoryName } from '../../helpers/getRepositoryName';
+import { GitRepositoriesService } from './GitRepositoriesService';
+
+const ORIGIN_PREFIX = 'origin/';
 
 @singleton()
 export class GitRepositoryTravelService {
@@ -10,14 +13,16 @@ export class GitRepositoryTravelService {
     @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService,
     @inject(GitService) private readonly gitService: GitService,
-    @inject(SettingsService) private readonly settingsService: SettingsService
+    @inject(SettingsService) private readonly settingsService: SettingsService,
+    @inject(GitRepositoriesService)
+    private readonly gitRepositoriesService: GitRepositoriesService
   ) {
     this.travelToDefaultBranch = this.travelToDefaultBranch.bind(this);
     this.travelBySha = this.travelBySha.bind(this);
   }
 
   async travelToDefaultBranch() {
-    for (const repo of this.gitService.API.repositories) {
+    for (const repo of this.gitRepositoriesService.activeRepositories) {
       const name = getRepositoryName(repo);
 
       if (!name) {
@@ -29,7 +34,7 @@ export class GitRepositoryTravelService {
   }
 
   async travelByBranchName(branchName: string) {
-    for (const repo of this.gitService.API.repositories) {
+    for (const repo of this.gitRepositoriesService.activeRepositories) {
       const name = getRepositoryName(repo);
 
       if (!name) {
@@ -40,28 +45,6 @@ export class GitRepositoryTravelService {
     }
   }
 
-  async getBranchesNames() {
-    const branchesNames = new Set<string>();
-
-    for (const repo of this.gitService.API.repositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
-      }
-
-      const branches = await this.repositoryGitService.getBranches(name);
-
-      for (const branch of branches) {
-        if (branch.name) {
-          branchesNames.add(branch.name);
-        }
-      }
-    }
-
-    return Array.from(branchesNames);
-  }
-
   async travelBySha(sha: string) {
     const initialRepoName =
       await this.repositoryGitService.getRepositoryNameByCommitSha(sha);
@@ -70,7 +53,17 @@ export class GitRepositoryTravelService {
       throw new Error('Repository not found');
     }
 
-    const restRepos = this.gitService.API.repositories.filter(
+    if (
+      !this.gitRepositoriesService.activeRepositories
+        .map(getRepositoryName)
+        .includes(initialRepoName)
+    ) {
+      throw new Error(
+        'Current repository is not active. Please activate it via the command palette'
+      );
+    }
+
+    const restRepos = this.gitRepositoriesService.activeRepositories.filter(
       (repo) => getRepositoryName(repo) !== initialRepoName
     );
     const commitDate = (
