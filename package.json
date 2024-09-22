@@ -2,7 +2,7 @@
   "name": "workspace-time-travel-machine",
   "displayName": "Workspace time travel machine",
   "description": "Workspace helper which helps to travel in time and see the state of your application in the past",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "engines": {
     "vscode": "^1.92.0"
   },

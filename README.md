@@ -69,3 +69,7 @@ Just simply execute: `yarn install` and you are ready to go
 
 - Fixes remote branch switching for "Time Travel By Branch Name" feature
 - Adds feature "Configure Active Repositories"
+
+### 0.1.9
+
+- Adds branch selector to "Merge All" feature
