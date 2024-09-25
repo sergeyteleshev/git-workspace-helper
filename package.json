@@ -2,7 +2,7 @@
   "name": "workspace-time-travel-machine",
   "displayName": "Workspace time travel machine",
   "description": "Workspace helper which helps to travel in time and see the state of your application in the past",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -25,7 +25,7 @@
       },
       {
         "command": "workspace-time-travel-machine.merge",
-        "title": "Workspace Time Travel Machine: Merge All"
+        "title": "Workspace Time Travel Machine: Merge All To Current Branch"
       },
       {
         "command": "workspace-time-travel-machine.discardChanges",
