@@ -25,7 +25,7 @@
       },
       {
         "command": "workspace-time-travel-machine.merge",
-        "title": "Workspace Time Travel Machine: Merge All"
+        "title": "Workspace Time Travel Machine: Merge All To Current Branch"
       },
       {
         "command": "workspace-time-travel-machine.discardChanges",

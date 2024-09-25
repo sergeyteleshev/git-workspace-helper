@@ -12,7 +12,7 @@
 - Time Travel To Default Branch - switches each repository to the default branches. The default branch can be configured in VSCode settings
 - Configure Active Repositories - Sets active repositories which will be used for other listed commands. By default all repositories in workspace are selected
 - Pull All - Pulls coming code in each repository
-- Merge All - Merges branch by name to all repositories current branch
+- Merge All To Current Branch - Merges branch by name to all repositories current branch
 - Discard Changes - Discard changes in each repository
 - Commit All - Commits all staged files in each repository
 - Push All - Pushes all commits in each repository
@@ -46,7 +46,7 @@ Just simply execute: `yarn install` and you are ready to go
 
 ### 0.1.4
 
-- Added "Merge All" feature
+- Added "Merge All To Current Branch" feature
 - Added ability to Discard changes for staged files
 - Removed "Invalid option" error
 
@@ -72,4 +72,4 @@ Just simply execute: `yarn install` and you are ready to go
 
 ### 0.1.9
 
-- Adds branch selector to "Merge All" feature
+- Adds branch selector to "Merge All To Current Branch" feature
