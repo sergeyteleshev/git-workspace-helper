@@ -4,7 +4,7 @@ import vscode from 'vscode';
 @singleton()
 export class SettingsService {
   private readonly config: vscode.WorkspaceConfiguration;
-  readonly configName = 'workspace-git-helper';
+  readonly configName = 'git-workspace-helper';
 
   constructor() {
     this.config = vscode.workspace.getConfiguration(this.configName);

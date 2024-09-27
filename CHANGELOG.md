@@ -2,7 +2,7 @@
 
 ### 0.0.1
 
-- Initial release of the "Workspace Git Helper"
+- Initial release of the "Git Workspace Helper"
 
 ### 0.1.1
 

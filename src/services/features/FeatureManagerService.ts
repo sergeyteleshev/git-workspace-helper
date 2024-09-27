@@ -12,16 +12,16 @@ import { FeatureAction } from '../../types/feature';
 import { injectable } from 'tsyringe';
 
 const ACTIONS: [string, FeatureAction][] = [
-  ['workspace-git-helper.checkout', checkout],
-  ['workspace-git-helper.pull', pull],
-  ['workspace-git-helper.merge', merge],
-  ['workspace-git-helper.discardChanges', discardChanges],
-  ['workspace-git-helper.stageChanges', stageChanges],
-  ['workspace-git-helper.unstageChanges', unstageChanges],
-  ['workspace-git-helper.commit', commit],
-  ['workspace-git-helper.push', push],
+  ['git-workspace-helper.checkout', checkout],
+  ['git-workspace-helper.pull', pull],
+  ['git-workspace-helper.merge', merge],
+  ['git-workspace-helper.discardChanges', discardChanges],
+  ['git-workspace-helper.stageChanges', stageChanges],
+  ['git-workspace-helper.unstageChanges', unstageChanges],
+  ['git-workspace-helper.commit', commit],
+  ['git-workspace-helper.push', push],
   [
-    'workspace-git-helper.configureActiveRepositories',
+    'git-workspace-helper.configureActiveRepositories',
     configureActiveRepositories,
   ],
 ];

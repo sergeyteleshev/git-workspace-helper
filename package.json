@@ -1,6 +1,6 @@
 {
-  "name": "workspace-git-helper",
-  "displayName": "Workspace git helper",
+  "name": "git-workspace-helper",
+  "displayName": "Git Workspace helper",
   "description": "Workspace helper which helps to manage git across multiple repositories",
   "version": "0.2.0",
   "engines": {
@@ -16,46 +16,46 @@
   "contributes": {
     "commands": [
       {
-        "command": "workspace-git-helper.checkout",
-        "title": "Workspace Git Helper: Checkout"
+        "command": "git-workspace-helper.checkout",
+        "title": "Git Workspace Helper: Checkout"
       },
       {
-        "command": "workspace-git-helper.pull",
-        "title": "Workspace Git Helper: Pull All"
+        "command": "git-workspace-helper.pull",
+        "title": "Git Workspace Helper: Pull All"
       },
       {
-        "command": "workspace-git-helper.merge",
-        "title": "Workspace Git Helper: Merge All To Current Branch"
+        "command": "git-workspace-helper.merge",
+        "title": "Git Workspace Helper: Merge All To Current Branch"
       },
       {
-        "command": "workspace-git-helper.discardChanges",
-        "title": "Workspace Git Helper: Discard Changes"
+        "command": "git-workspace-helper.discardChanges",
+        "title": "Git Workspace Helper: Discard Changes"
       },
       {
-        "command": "workspace-git-helper.stageChanges",
-        "title": "Workspace Git Helper: Stage Changes"
+        "command": "git-workspace-helper.stageChanges",
+        "title": "Git Workspace Helper: Stage Changes"
       },
       {
-        "command": "workspace-git-helper.unstageChanges",
-        "title": "Workspace Git Helper: Unstage Changes"
+        "command": "git-workspace-helper.unstageChanges",
+        "title": "Git Workspace Helper: Unstage Changes"
       },
       {
-        "command": "workspace-git-helper.commit",
-        "title": "Workspace Git Helper: Commit Changes"
+        "command": "git-workspace-helper.commit",
+        "title": "Git Workspace Helper: Commit Changes"
       },
       {
-        "command": "workspace-git-helper.push",
-        "title": "Workspace Git Helper: Push All Commits"
+        "command": "git-workspace-helper.push",
+        "title": "Git Workspace Helper: Push All Commits"
       },
       {
-        "command": "workspace-git-helper.configureActiveRepositories",
-        "title": "Workspace Git Helper: Configure Active Repositories"
+        "command": "git-workspace-helper.configureActiveRepositories",
+        "title": "Git Workspace Helper: Configure Active Repositories"
       }
     ],
     "configuration": {
-      "title": "Workspace Git Helper",
+      "title": "Git Workspace Helper",
       "properties": {
-        "workspace-git-helper.defaultBranchName": {
+        "git-workspace-helper.defaultBranchName": {
           "type": "string",
           "default": "master",
           "description": "Default branch for each repository. Used for \"Checkout to Master\" command"
