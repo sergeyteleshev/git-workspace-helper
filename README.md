@@ -7,9 +7,9 @@
 
 ## Features
 
-- Time Travel To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
-- Time Travel To Branch - switches repository to the specific branch. If branch is not found it stays as it is.
-- Time Travel To Default Branch - switches each repository to the default branches. The default branch can be configured in VSCode settings
+- Checkout To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
+- Checkout To Branch - switches repository to the specific branch. If branch is not found it stays as it is.
+- Checkout To Default Branch - switches each repository to the default branches. The default branch can be configured in VSCode settings
 - Configure Active Repositories - Sets active repositories which will be used for other listed commands. By default all repositories in workspace are selected
 - Pull All - Pulls coming code in each repository
 - Merge All To Current Branch - Merges branch by name to all repositories current branch
@@ -27,18 +27,18 @@ Just simply execute: `yarn install` and you are ready to go
 
 ### 0.0.1
 
-- Initial release of the "Workspace Time Travel Machine"
+- Initial release of the "Workspace Git Helper"
 
 ### 0.1.1
 
-- Added travel by branch name
+- Added checkout by branch name
 
 ### 0.1.2
 
 - Renamed extension
-- Renamed Travel To Master -> Travel To Default Branch
+- Renamed Checkout To Master -> Checkout To Default Branch
 - Cropped icon
-- Grouped Time Travel features into one group
+- Grouped Checkout features into one group
 
 ### 0.1.3
 
@@ -63,11 +63,11 @@ Just simply execute: `yarn install` and you are ready to go
 
 ### 0.1.7
 
-- Improves branch picker in "Time Travel By Branch Name" feature
+- Improves branch picker in "Checkout By Branch Name" feature
 
 ### 0.1.8
 
-- Fixes remote branch switching for "Time Travel By Branch Name" feature
+- Fixes remote branch switching for "Checkout By Branch Name" feature
 - Adds feature "Configure Active Repositories"
 
 ### 0.1.9

@@ -1,26 +1,26 @@
 import vscode from 'vscode';
-import { GitRepositoryTravelService } from '../services/git/GitRepositoryTravelService';
+import { GitRepositoryCheckoutService } from '../services/git/GitRepositoryCheckoutService';
 import { DIContainerService } from '../DI/DIContainer';
 import { isSha } from '../helpers/isSha';
 import { GitRepositoriesBranchService } from '../services/git/GitRepositoriesBranchService';
 import { FeatureAction } from '../types/feature';
 
-enum TravelType {
+enum CheckoutType {
   BranchName = 'By branch name',
   CommitSha = 'By commit SHA',
   DefaultBranch = 'To default branch',
 }
 
-const TRAVEL_OPTIONS: TravelType[] = [
-  TravelType.BranchName,
-  TravelType.CommitSha,
-  TravelType.DefaultBranch,
+const CHECKOUT_OPTIONS: CheckoutType[] = [
+  CheckoutType.BranchName,
+  CheckoutType.CommitSha,
+  CheckoutType.DefaultBranch,
 ];
 
-async function travelByBranchName() {
+async function checkoutByBranchName() {
   const dIContainerService = new DIContainerService();
-  const gitRepositoryTravelService = dIContainerService.getByClassName(
-    GitRepositoryTravelService
+  const gitRepositoryCheckoutService = dIContainerService.getByClassName(
+    GitRepositoryCheckoutService
   );
   const gitRepositoriesBranchService = dIContainerService.getByClassName(
     GitRepositoriesBranchService
@@ -36,13 +36,13 @@ async function travelByBranchName() {
     return;
   }
 
-  gitRepositoryTravelService.travelByBranchName(branchNameCandidate);
+  gitRepositoryCheckoutService.checkoutByBranchName(branchNameCandidate);
 }
 
-async function travelBySha() {
+async function checkoutBySha() {
   const dIContainerService = new DIContainerService();
-  const gitRepositoryTravelService = dIContainerService.getByClassName(
-    GitRepositoryTravelService
+  const gitRepositoryCheckoutService = dIContainerService.getByClassName(
+    GitRepositoryCheckoutService
   );
 
   const shaCandidate = (
@@ -61,37 +61,37 @@ async function travelBySha() {
     return;
   }
 
-  gitRepositoryTravelService.travelBySha(shaCandidate);
+  gitRepositoryCheckoutService.checkoutBySha(shaCandidate);
 }
 
-export async function travelToDefaultBranch() {
+export async function checkoutToDefaultBranch() {
   const dIContainerService = new DIContainerService();
-  const gitRepositoryTravelService = dIContainerService.getByClassName(
-    GitRepositoryTravelService
+  const gitRepositoryCheckoutService = dIContainerService.getByClassName(
+    GitRepositoryCheckoutService
   );
 
-  gitRepositoryTravelService.travelToDefaultBranch();
+  gitRepositoryCheckoutService.checkoutToDefaultBranch();
 }
 
-export const travel: FeatureAction = async (context) => {
-  const result = await vscode.window.showQuickPick(TRAVEL_OPTIONS);
+export const checkout: FeatureAction = async (context) => {
+  const result = await vscode.window.showQuickPick(CHECKOUT_OPTIONS);
 
   if (!result) {
     return;
   }
 
-  if (result === TravelType.BranchName) {
-    travelByBranchName();
+  if (result === CheckoutType.BranchName) {
+    checkoutByBranchName();
     return;
   }
 
-  if (result === TravelType.CommitSha) {
-    travelBySha();
+  if (result === CheckoutType.CommitSha) {
+    checkoutBySha();
     return;
   }
 
-  if (result === TravelType.DefaultBranch) {
-    travelToDefaultBranch();
+  if (result === CheckoutType.DefaultBranch) {
+    checkoutToDefaultBranch();
     return;
   }
 };

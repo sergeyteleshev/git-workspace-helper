@@ -4,7 +4,7 @@ import vscode from 'vscode';
 @singleton()
 export class SettingsService {
   private readonly config: vscode.WorkspaceConfiguration;
-  readonly configName = 'workspace-time-travel-machine';
+  readonly configName = 'workspace-git-helper';
 
   constructor() {
     this.config = vscode.workspace.getConfiguration(this.configName);
