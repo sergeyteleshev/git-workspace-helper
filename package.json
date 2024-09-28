@@ -1,6 +1,6 @@
 {
   "name": "git-workspace-helper",
-  "displayName": "Git Workspace helper",
+  "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
   "version": "0.2.0",
   "engines": {
