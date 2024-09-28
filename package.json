@@ -1,7 +1,7 @@
 {
   "name": "git-workspace-helper",
   "displayName": "Git Workspace helper",
-  "description": "Workspace helper which helps to manage git across multiple repositories",
+  "description": "Manage workspace repositories via git without routine using one command",
   "version": "0.2.0",
   "engines": {
     "vscode": "^1.92.0"
@@ -58,7 +58,7 @@
         "git-workspace-helper.defaultBranchName": {
           "type": "string",
           "default": "master",
-          "description": "Default branch for each repository. Used for \"Checkout to Master\" command"
+          "description": "Default branch for each repository. Used for \"Checkout To Default Branch\" command"
         }
       }
     }
