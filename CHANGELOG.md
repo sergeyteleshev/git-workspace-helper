@@ -48,3 +48,8 @@
 ### 0.1.9
 
 - Adds branch selector to "Merge All To Current Branch" feature
+
+### 0.2.0
+
+- Renamed app and some features
+- Changed logo
