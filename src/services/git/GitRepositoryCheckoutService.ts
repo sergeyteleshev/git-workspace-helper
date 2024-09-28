@@ -17,6 +17,7 @@ export class GitRepositoryCheckoutService {
   ) {
     this.checkoutToDefaultBranch = this.checkoutToDefaultBranch.bind(this);
     this.checkoutBySha = this.checkoutBySha.bind(this);
+    this.checkoutByBranchName = this.checkoutByBranchName.bind(this);
   }
 
   async checkoutToDefaultBranch() {
