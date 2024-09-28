@@ -1,7 +1,7 @@
 ## How to use it
 
 1. Open command palette (CMD/ctrl + shift + P)
-2. Type "wttm"
+2. Type "gwh"
 3. See the available commands
 4. Execute the one you need
 
