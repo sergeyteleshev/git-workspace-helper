@@ -1,6 +1,5 @@
 import { inject, singleton } from 'tsyringe';
 import { GitRepositoryService } from './GitRepositoryService';
-import { GitService } from './GitService';
 import { SettingsService } from '../settings/SettingsService';
 import { getRepositoryName } from '../../helpers/getRepositoryName';
 import { GitRepositoriesService } from './GitRepositoriesService';
@@ -8,20 +7,20 @@ import { GitRepositoriesService } from './GitRepositoriesService';
 const ORIGIN_PREFIX = 'origin/';
 
 @singleton()
-export class GitRepositoryTravelService {
+export class GitRepositoryCheckoutService {
   constructor(
     @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService,
-    @inject(GitService) private readonly gitService: GitService,
     @inject(SettingsService) private readonly settingsService: SettingsService,
     @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService
   ) {
-    this.travelToDefaultBranch = this.travelToDefaultBranch.bind(this);
-    this.travelBySha = this.travelBySha.bind(this);
+    this.checkoutToDefaultBranch = this.checkoutToDefaultBranch.bind(this);
+    this.checkoutBySha = this.checkoutBySha.bind(this);
+    this.checkoutByBranchName = this.checkoutByBranchName.bind(this);
   }
 
-  async travelToDefaultBranch() {
+  async checkoutToDefaultBranch() {
     for (const repo of this.gitRepositoriesService.activeRepositories) {
       const name = getRepositoryName(repo);
 
@@ -33,7 +32,7 @@ export class GitRepositoryTravelService {
     }
   }
 
-  async travelByBranchName(branchName: string) {
+  async checkoutByBranchName(branchName: string) {
     for (const repo of this.gitRepositoriesService.activeRepositories) {
       const name = getRepositoryName(repo);
 
@@ -45,7 +44,7 @@ export class GitRepositoryTravelService {
     }
   }
 
-  async travelBySha(sha: string) {
+  async checkoutBySha(sha: string) {
     const initialRepoName =
       await this.repositoryGitService.getRepositoryNameByCommitSha(sha);
 

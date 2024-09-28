@@ -1,7 +1,7 @@
 import vscode from 'vscode';
 import { pull } from '../../features/pull';
 import { discardChanges } from '../../features/discardChanges';
-import { travel } from '../../features/travel';
+import { checkout } from '../../features/checkout';
 import { merge } from '../../features/merge';
 import { commit } from '../../features/commit';
 import { push } from '../../features/push';
@@ -12,16 +12,16 @@ import { FeatureAction } from '../../types/feature';
 import { injectable } from 'tsyringe';
 
 const ACTIONS: [string, FeatureAction][] = [
-  ['workspace-time-travel-machine.travel', travel],
-  ['workspace-time-travel-machine.pull', pull],
-  ['workspace-time-travel-machine.merge', merge],
-  ['workspace-time-travel-machine.discardChanges', discardChanges],
-  ['workspace-time-travel-machine.stageChanges', stageChanges],
-  ['workspace-time-travel-machine.unstageChanges', unstageChanges],
-  ['workspace-time-travel-machine.commit', commit],
-  ['workspace-time-travel-machine.push', push],
+  ['git-workspace-helper.checkout', checkout],
+  ['git-workspace-helper.pull', pull],
+  ['git-workspace-helper.merge', merge],
+  ['git-workspace-helper.discardChanges', discardChanges],
+  ['git-workspace-helper.stageChanges', stageChanges],
+  ['git-workspace-helper.unstageChanges', unstageChanges],
+  ['git-workspace-helper.commit', commit],
+  ['git-workspace-helper.push', push],
   [
-    'workspace-time-travel-machine.configureActiveRepositories',
+    'git-workspace-helper.configureActiveRepositories',
     configureActiveRepositories,
   ],
 ];

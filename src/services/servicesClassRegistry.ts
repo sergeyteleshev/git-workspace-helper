@@ -1,7 +1,7 @@
 import { InjectionToken } from 'tsyringe';
 import { GitService } from './git/GitService';
 import { GitRepositoryService } from './git/GitRepositoryService';
-import { GitRepositoryTravelService } from './git/GitRepositoryTravelService';
+import { GitRepositoryCheckoutService } from './git/GitRepositoryCheckoutService';
 import { SettingsService } from './settings/SettingsService';
 import { FeatureManagerService } from './features/FeatureManagerService';
 import { GitRepositoriesActionsService } from './git/GitRepositoriesActionsService';
@@ -14,7 +14,7 @@ export const SERVICES_CLASS_REGISTRY: InjectionToken<any>[] = [
   WorkSpaceCacheService,
   GitService,
   GitRepositoryService,
-  GitRepositoryTravelService,
+  GitRepositoryCheckoutService,
   SettingsService,
   FeatureManagerService,
   GitRepositoriesActionsService,
