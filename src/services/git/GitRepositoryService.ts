@@ -10,6 +10,10 @@ export class GitRepositoryService {
     this.getCommitInfo = this.getCommitInfo.bind(this);
     this.pull = this.pull.bind(this);
     this.discardChanges = this.discardChanges.bind(this);
+    this.merge = this.merge.bind(this);
+    this.commit = this.commit.bind(this);
+    this.push = this.push.bind(this);
+    this.createBranch = this.createBranch.bind(this);
   }
 
   private getRepository(name: string) {
@@ -29,6 +33,20 @@ export class GitRepositoryService {
       sort: 'committerdate',
       remote: true,
     });
+  }
+
+  async createBranch(repoName: string, branchName: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    if ((await repo.getBranch(branchName)).name === branchName) {
+      throw new Error('This branch already exists');
+    }
+
+    await repo.createBranch(branchName, true);
   }
 
   async findClosestCommitByDate(repoName: string, date: Date) {

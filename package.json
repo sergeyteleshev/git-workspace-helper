@@ -2,7 +2,7 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -26,6 +26,10 @@
       {
         "command": "git-workspace-helper.merge",
         "title": "Git Workspace Helper: Merge All To Current Branch"
+      },
+      {
+        "command": "git-workspace-helper.createBranch",
+        "title": "Git Workspace Helper: Create Branch"
       },
       {
         "command": "git-workspace-helper.discardChanges",

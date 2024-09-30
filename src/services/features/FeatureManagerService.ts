@@ -10,10 +10,12 @@ import { unstageChanges } from '../../features/unstageChanges';
 import { configureActiveRepositories } from '../../features/configureActiveRepositories';
 import { FeatureAction } from '../../types/feature';
 import { injectable } from 'tsyringe';
+import { createBranch } from '../../features/createBranch';
 
 const ACTIONS: [string, FeatureAction][] = [
   ['git-workspace-helper.checkout', checkout],
   ['git-workspace-helper.pull', pull],
+  ['git-workspace-helper.createBranch', createBranch],
   ['git-workspace-helper.merge', merge],
   ['git-workspace-helper.discardChanges', discardChanges],
   ['git-workspace-helper.stageChanges', stageChanges],
