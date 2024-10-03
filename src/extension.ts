@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
       FeatureManagerService
     );
 
-  featureManagerService.register(context);
+  featureManagerService.register();
 }
 
 export async function deactivate() {

@@ -11,6 +11,7 @@ import { configureActiveRepositories } from '../../features/configureActiveRepos
 import { FeatureAction } from '../../types/feature';
 import { injectable } from 'tsyringe';
 import { createBranch } from '../../features/createBranch';
+import { VscodeContextService } from '../VscodeContextService';
 
 const ACTIONS: [string, FeatureAction][] = [
   ['git-workspace-helper.checkout', checkout],
@@ -34,10 +35,12 @@ export class FeatureManagerService {
     this.register = this.register.bind(this);
   }
 
-  register(context: vscode.ExtensionContext) {
+  register() {
     ACTIONS.forEach(([command, action]) => {
-      context.subscriptions.push(
-        vscode.commands.registerCommand(command, () => action(context))
+      VscodeContextService.context.subscriptions.push(
+        vscode.commands.registerCommand(command, () =>
+          action(VscodeContextService.context)
+        )
       );
     });
   }
