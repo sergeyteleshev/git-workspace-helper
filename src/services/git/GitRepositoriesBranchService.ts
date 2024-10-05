@@ -49,7 +49,7 @@ export class GitRepositoriesBranchService {
     const activeReposNames = this.gitRepositoriesService.activeRepositories
       .map(getRepositoryName)
       .filter(isNotNullDefined)
-      .filter((name) => destReposNamesSet.has(name));
+      .filter((name) => !destReposNamesSet.size || destReposNamesSet.has(name));
 
     for (const repoName of activeReposNames) {
       this.repositoryGitService.createBranch(repoName, branchName);

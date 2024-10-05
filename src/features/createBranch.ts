@@ -17,6 +17,15 @@ export async function createBranch() {
       GitRepositoriesService
     );
 
+  const newBranchName = await vscode.window.showInputBox({
+    title: 'Create branch',
+    placeHolder: 'Enter new branch name',
+  });
+
+  if (!newBranchName) {
+    return;
+  }
+
   const quickPick = new CustomQuickPick();
 
   const activeReposNames = gitRepositoriesService.activeRepositories
@@ -26,15 +35,6 @@ export async function createBranch() {
   quickPick
     .selectMany()
     .setItems(activeReposNames.map((name) => ({ label: name })));
-
-  const newBranchName = await vscode.window.showInputBox({
-    title: 'Create branch',
-    placeHolder: 'Enter new branch name',
-  });
-
-  if (!newBranchName) {
-    return;
-  }
 
   const destinationRepos = await quickPick.show();
 
