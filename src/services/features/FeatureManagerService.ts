@@ -11,7 +11,7 @@ import { configureActiveRepositories } from '../../features/configureActiveRepos
 import { FeatureAction } from '../../types/feature';
 import { injectable } from 'tsyringe';
 import { createBranch } from '../../features/createBranch';
-import { VscodeContextService } from '../VscodeContextService';
+import { VscodeContextService } from '../base/VscodeContextService';
 
 const ACTIONS: [string, FeatureAction][] = [
   ['git-workspace-helper.checkout', checkout],

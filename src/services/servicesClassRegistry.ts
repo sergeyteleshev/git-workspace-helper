@@ -6,8 +6,8 @@ import { SettingsService } from './settings/SettingsService';
 import { FeatureManagerService } from './features/FeatureManagerService';
 import { GitRepositoriesActionsService } from './git/GitRepositoriesActionsService';
 import { GitRepositoriesBranchService } from './git/GitRepositoriesBranchService';
-import { VscodeContextService } from './VscodeContextService';
-import { WorkSpaceCacheService } from './WorkspaceCacheService';
+import { VscodeContextService } from './base/VscodeContextService';
+import { WorkSpaceCacheService } from './base/WorkspaceCacheService';
 
 export const SERVICES_CLASS_REGISTRY: InjectionToken<any>[] = [
   VscodeContextService,

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { GitService } from './GitService';
-import { WorkSpaceCacheService } from '../WorkspaceCacheService';
+import { WorkSpaceCacheService } from '../base/WorkspaceCacheService';
 import { getRepositoryName } from '../../helpers/getRepositoryName';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined';
 
