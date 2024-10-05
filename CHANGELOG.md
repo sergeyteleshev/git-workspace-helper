@@ -59,3 +59,7 @@
 - Adds all of the features to the UI
 - Adds "Create Branch" feature
 - Adds new icon
+
+### 0.2.2
+
+- Changes main UI icons

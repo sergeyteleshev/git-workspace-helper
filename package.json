@@ -2,7 +2,7 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -23,7 +23,7 @@
       {
         "command": "git-workspace-helper.checkout",
         "title": "Git Workspace Helper: Checkout",
-        "icon": "$(git-branch)"
+        "icon": "$(rocket)"
       },
       {
         "command": "git-workspace-helper.pull",
@@ -90,6 +90,7 @@
         },
         {
           "command": "git-workspace-helper.push",
+          "group": "navigation",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
@@ -98,6 +99,7 @@
         },
         {
           "command": "git-workspace-helper.checkout",
+          "group": "navigation",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
@@ -106,7 +108,6 @@
         },
         {
           "command": "git-workspace-helper.discardChanges",
-          "group": "navigation",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
