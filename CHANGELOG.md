@@ -58,3 +58,4 @@
 
 - Adds all of the features to the UI
 - Adds "Create Branch" feature
+- Adds new icon
