@@ -32,9 +32,13 @@ export async function createBranch() {
     placeHolder: 'Enter new branch name',
   });
 
+  if (!newBranchName) {
+    return;
+  }
+
   const destinationRepos = await quickPick.show();
 
-  if (!isNotNullDefined(destinationRepos) || !isNotNullDefined(newBranchName)) {
+  if (!isNotNullDefined(destinationRepos)) {
     return;
   }
 
