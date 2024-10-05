@@ -1,5 +1,13 @@
 ## How to use it
 
+#### UI:
+
+1. Go to Source Control feature
+2. See the commands in the header ("..." - also here)
+3. Execute the one you need
+
+#### Command palette:
+
 1. Open command palette (CMD/ctrl + shift + P)
 2. Type "gwh"
 3. See the available commands
@@ -11,6 +19,7 @@
 - Push All - Pushes all commits in each repository
 - Merge All To Current Branch - Merges branch by name to all repositories current branch
 - Pull All - Pulls coming code in each repository
+- Create branch - Creates new branch for for all selected repositories
 - Configure Active Repositories - Sets active repositories which will be used for other listed commands. By default all repositories in workspace are selected
 - Checkout To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
 - Checkout To Branch - switches repository to the specific branch. If branch is not found it stays as it is.

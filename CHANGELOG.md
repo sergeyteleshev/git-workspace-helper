@@ -53,3 +53,9 @@
 
 - Renamed app and some features
 - Changed logo
+
+### 0.2.1
+
+- Adds all of the features to the UI
+- Adds "Create Branch" feature
+- Adds new icon

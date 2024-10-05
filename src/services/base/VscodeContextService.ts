@@ -1,7 +1,5 @@
-import { injectable } from 'tsyringe';
-import vscode, { ExtensionContext } from 'vscode';
+import { ExtensionContext } from 'vscode';
 
-@injectable()
 export class VscodeContextService {
   private static _extContext: ExtensionContext;
 

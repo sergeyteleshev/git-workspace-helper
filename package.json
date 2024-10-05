@@ -2,56 +2,123 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": {
     "vscode": "^1.92.0"
   },
   "categories": [
+    "SCM Providers",
     "Other"
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
   "publisher": "stelesh",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sergeyteleshev/git-workspace-helper"
+  },
   "icon": "./icon.png",
   "contributes": {
     "commands": [
       {
         "command": "git-workspace-helper.checkout",
-        "title": "Git Workspace Helper: Checkout"
+        "title": "Git Workspace Helper: Checkout",
+        "icon": "$(git-branch)"
       },
       {
         "command": "git-workspace-helper.pull",
-        "title": "Git Workspace Helper: Pull All"
+        "title": "Git Workspace Helper: Pull All",
+        "icon": "$(repo-pull)"
       },
       {
         "command": "git-workspace-helper.merge",
-        "title": "Git Workspace Helper: Merge All To Current Branch"
+        "title": "Git Workspace Helper: Merge All To Current Branch",
+        "icon": "$(git-merge)"
+      },
+      {
+        "command": "git-workspace-helper.createBranch",
+        "title": "Git Workspace Helper: Create Branch",
+        "icon": "$(git-branch-create)"
       },
       {
         "command": "git-workspace-helper.discardChanges",
-        "title": "Git Workspace Helper: Discard Changes"
+        "title": "Git Workspace Helper: Discard Changes",
+        "icon": "$(notebook-revert)"
       },
       {
         "command": "git-workspace-helper.stageChanges",
-        "title": "Git Workspace Helper: Stage Changes"
+        "title": "Git Workspace Helper: Stage Changes",
+        "icon": "$(diff-insert)"
       },
       {
         "command": "git-workspace-helper.unstageChanges",
-        "title": "Git Workspace Helper: Unstage Changes"
+        "title": "Git Workspace Helper: Unstage Changes",
+        "icon": "$(diff-remove)"
       },
       {
         "command": "git-workspace-helper.commit",
-        "title": "Git Workspace Helper: Commit Changes"
+        "title": "Git Workspace Helper: Commit Changes",
+        "icon": "$(git-commit)"
       },
       {
         "command": "git-workspace-helper.push",
-        "title": "Git Workspace Helper: Push All Commits"
+        "title": "Git Workspace Helper: Push All Commits",
+        "icon": "$(repo-push)"
       },
       {
         "command": "git-workspace-helper.configureActiveRepositories",
-        "title": "Git Workspace Helper: Configure Active Repositories"
+        "title": "Git Workspace Helper: Configure Active Repositories",
+        "icon": "$(gear)"
       }
     ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "git-workspace-helper.pull",
+          "group": "navigation",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.createBranch",
+          "group": "navigation",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.configureActiveRepositories",
+          "group": "navigation",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.push",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.merge",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.checkout",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.commit",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.discardChanges",
+          "group": "navigation",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.unstageChanges",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.stageChanges",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ]
+    },
     "configuration": {
       "title": "Git Workspace Helper",
       "properties": {

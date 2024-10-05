@@ -2,6 +2,7 @@ import { inject, singleton } from 'tsyringe';
 import { GitRepositoryService } from './GitRepositoryService';
 import { getRepositoryName } from '../../helpers/getRepositoryName';
 import { GitRepositoriesService } from './GitRepositoriesService';
+import { isNotNullDefined } from '../../helpers/isNotNullDefined';
 
 const ORIGIN_PREFIX = 'origin/';
 
@@ -40,5 +41,18 @@ export class GitRepositoriesBranchService {
     }
 
     return Array.from(branchesNames);
+  }
+
+  async createBranches(branchName: string, filterRepoNames: string[] = []) {
+    const destReposNamesSet = new Set(filterRepoNames);
+
+    const activeReposNames = this.gitRepositoriesService.activeRepositories
+      .map(getRepositoryName)
+      .filter(isNotNullDefined)
+      .filter((name) => !destReposNamesSet.size || destReposNamesSet.has(name));
+
+    for (const repoName of activeReposNames) {
+      this.repositoryGitService.createBranch(repoName, branchName);
+    }
   }
 }

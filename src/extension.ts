@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import * as vscode from 'vscode';
+import vscode from 'vscode';
 import { DIContainerService } from './DI/DIContainer';
 import { FeatureManagerService } from './services/features/FeatureManagerService';
-import { VscodeContextService } from './services/VscodeContextService';
+import { VscodeContextService } from './services/base/VscodeContextService';
 
 const diContainerService = new DIContainerService();
 
@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
       FeatureManagerService
     );
 
-  featureManagerService.register(context);
+  featureManagerService.register();
 }
 
 export async function deactivate() {
