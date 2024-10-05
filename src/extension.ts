@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as vscode from 'vscode';
+import vscode from 'vscode';
 import { DIContainerService } from './DI/DIContainer';
 import { FeatureManagerService } from './services/features/FeatureManagerService';
 import { VscodeContextService } from './services/VscodeContextService';
