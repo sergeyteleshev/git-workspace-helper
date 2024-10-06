@@ -63,3 +63,7 @@
 ### 0.2.2
 
 - Changes main UI icons
+
+### 0.2.3
+
+- fixes "create branch" feature

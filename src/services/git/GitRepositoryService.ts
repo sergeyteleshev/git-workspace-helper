@@ -42,12 +42,6 @@ export class GitRepositoryService {
       throw new Error('Repository not found');
     }
 
-    const branch = await repo.getBranch(branchName);
-
-    if (branch.name === branchName) {
-      throw new Error('This branch already exists');
-    }
-
     await repo.createBranch(branchName, true);
   }
 
