@@ -1,5 +1,4 @@
 import vscode from 'vscode';
-import { FeatureAction } from '../../types/feature';
 import { inject, injectable } from 'tsyringe';
 import { VscodeContextService } from '../base/VscodeContextService';
 import { GitCommitFeatureService } from './GitCommitFeatureService';
@@ -15,8 +14,6 @@ import { GitCreateBranchFeatureService } from './GitCreateBranchFeatureService';
 
 @injectable()
 export class FeatureManagerService {
-  private readonly actions: Map<string, FeatureAction> = new Map();
-
   constructor(
     @inject(GitCommitFeatureService)
     private readonly gitCommitFeatureService: GitCommitFeatureService,
@@ -40,10 +37,9 @@ export class FeatureManagerService {
     private readonly gitCreateBranchFeatureService: GitCreateBranchFeatureService
   ) {
     this.register = this.register.bind(this);
-    this.registerFeatureCommands();
   }
 
-  private registerFeatureCommands() {
+  register() {
     [
       this.gitCommitFeatureService,
       this.gitPullFeatureService,
@@ -63,17 +59,11 @@ export class FeatureManagerService {
         return;
       }
 
-      this.actions.set(command, action);
-    });
-  }
-
-  register() {
-    for (const [command, action] of this.actions) {
       VscodeContextService.context.subscriptions.push(
         vscode.commands.registerCommand(command, () =>
           action(VscodeContextService.context)
         )
       );
-    }
+    });
   }
 }

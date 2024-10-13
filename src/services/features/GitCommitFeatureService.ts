@@ -15,7 +15,6 @@ export class GitCommitFeatureService extends BaseFeatureService {
   ) {
     super();
     this.commit = this.commit.bind(this);
-
     this.setFeature('git-workspace-helper.commit', this.commit);
   }
 
