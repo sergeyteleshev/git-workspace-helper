@@ -66,4 +66,9 @@
 
 ### 0.2.3
 
-- fixes "create branch" feature
+- Fixes "create branch" feature
+
+### 0.2.4
+
+- Refactors of the code base
+- Changes few main icons in the "Source Control" feature

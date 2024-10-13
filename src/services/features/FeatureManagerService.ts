@@ -1,42 +1,64 @@
 import vscode from 'vscode';
-import { pull } from '../../features/pull';
-import { discardChanges } from '../../features/discardChanges';
-import { checkout } from '../../features/checkout';
-import { merge } from '../../features/merge';
-import { commit } from '../../features/commit';
-import { push } from '../../features/push';
-import { stageChanges } from '../../features/stageChanges';
-import { unstageChanges } from '../../features/unstageChanges';
-import { configureActiveRepositories } from '../../features/configureActiveRepositories';
-import { FeatureAction } from '../../types/feature';
-import { injectable } from 'tsyringe';
-import { createBranch } from '../../features/createBranch';
+import { inject, injectable } from 'tsyringe';
 import { VscodeContextService } from '../base/VscodeContextService';
-
-const ACTIONS: [string, FeatureAction][] = [
-  ['git-workspace-helper.checkout', checkout],
-  ['git-workspace-helper.pull', pull],
-  ['git-workspace-helper.createBranch', createBranch],
-  ['git-workspace-helper.merge', merge],
-  ['git-workspace-helper.discardChanges', discardChanges],
-  ['git-workspace-helper.stageChanges', stageChanges],
-  ['git-workspace-helper.unstageChanges', unstageChanges],
-  ['git-workspace-helper.commit', commit],
-  ['git-workspace-helper.push', push],
-  [
-    'git-workspace-helper.configureActiveRepositories',
-    configureActiveRepositories,
-  ],
-];
+import { GitCommitFeatureService } from './GitCommitFeatureService';
+import { GitPullFeatureService } from './GitPullFeatureService';
+import { GitDiscardChangesFeaturesService } from './GitDiscardChangesFeaturesService';
+import { GitMergeFeatureService } from './GitMergeFeatureService';
+import { GitPushFeatureService } from './GitPushFeatureService';
+import { ConfigureActiveRepositoriesFeatureService } from './ConfigureActiveRepositoriesFeatureService';
+import { GitStageChangesFeatureService } from './GitStageChangesFeatureService';
+import { GitUnstageChangesFeatureService } from './GitUnstageChangesFeatureService';
+import { GitCheckoutFeatureService } from './GitCheckoutFeatureService';
+import { GitCreateBranchFeatureService } from './GitCreateBranchFeatureService';
 
 @injectable()
 export class FeatureManagerService {
-  constructor() {
+  constructor(
+    @inject(GitCommitFeatureService)
+    private readonly gitCommitFeatureService: GitCommitFeatureService,
+    @inject(GitPullFeatureService)
+    private readonly gitPullFeatureService: GitPullFeatureService,
+    @inject(GitDiscardChangesFeaturesService)
+    private readonly gitDiscardChangesFeaturesService: GitDiscardChangesFeaturesService,
+    @inject(GitMergeFeatureService)
+    private readonly gitMergeFeatureService: GitMergeFeatureService,
+    @inject(GitPushFeatureService)
+    private readonly gitPushFeatureService: GitPushFeatureService,
+    @inject(ConfigureActiveRepositoriesFeatureService)
+    private readonly configureActiveRepositoriesFeatureService: ConfigureActiveRepositoriesFeatureService,
+    @inject(GitStageChangesFeatureService)
+    private readonly gitStageChangesFeatureService: GitStageChangesFeatureService,
+    @inject(GitUnstageChangesFeatureService)
+    private readonly gitUnstageChangesFeatureService: GitUnstageChangesFeatureService,
+    @inject(GitCheckoutFeatureService)
+    private readonly gitCheckoutFeatureService: GitCheckoutFeatureService,
+    @inject(GitCreateBranchFeatureService)
+    private readonly gitCreateBranchFeatureService: GitCreateBranchFeatureService
+  ) {
     this.register = this.register.bind(this);
   }
 
   register() {
-    ACTIONS.forEach(([command, action]) => {
+    [
+      this.gitCommitFeatureService,
+      this.gitPullFeatureService,
+      this.gitDiscardChangesFeaturesService,
+      this.gitMergeFeatureService,
+      this.gitPushFeatureService,
+      this.configureActiveRepositoriesFeatureService,
+      this.gitStageChangesFeatureService,
+      this.gitUnstageChangesFeatureService,
+      this.gitCheckoutFeatureService,
+      this.gitCreateBranchFeatureService,
+    ].forEach((service) => {
+      const command = service.getCommand();
+      const action = service.getAction();
+
+      if (!command || !action) {
+        return;
+      }
+
       VscodeContextService.context.subscriptions.push(
         vscode.commands.registerCommand(command, () =>
           action(VscodeContextService.context)

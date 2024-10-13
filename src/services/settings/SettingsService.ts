@@ -10,7 +10,7 @@ export class SettingsService {
     this.config = vscode.workspace.getConfiguration(this.configName);
   }
 
-  get branchName(): string {
+  get defaultBranchName(): string {
     return this.config.get<string>('defaultBranchName')?.trim() || 'master';
   }
 }
