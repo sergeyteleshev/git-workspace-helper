@@ -3,15 +3,19 @@ import { GitService } from './GitService';
 import { WorkSpaceCacheService } from '../base/WorkspaceCacheService';
 import { getRepositoryName } from '../../helpers/getRepositoryName';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined';
+import { GitRepositoryService } from './GitRepositoryService';
 
 export const ACTIVE_REPOSITORIES_CACHE_KEY = 'ACTIVE_REPOSITORIES';
+const ORIGIN_PREFIX = 'origin/';
 
 @injectable()
 export class GitRepositoriesService {
   constructor(
     @inject(GitService) private readonly gitService: GitService,
     @inject(WorkSpaceCacheService)
-    private readonly workspaceCacheService: WorkSpaceCacheService
+    private readonly workspaceCacheService: WorkSpaceCacheService,
+    @inject(GitRepositoryService)
+    private readonly gitRepositoryService: GitRepositoryService
   ) {
     this.setActiveRepositories = this.setActiveRepositories.bind(this);
     this.restoreDefaultActiveRepositories =
@@ -38,6 +42,34 @@ export class GitRepositoriesService {
 
   get repositories() {
     return this.gitService.API.repositories ?? [];
+  }
+
+  async getBranchesNames() {
+    const branchesNames = new Set<string>();
+
+    for (const repo of this.activeRepositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      const branches = await this.gitRepositoryService.getBranches(name);
+
+      for (const branch of branches) {
+        if (branch.name) {
+          let name = branch.name;
+
+          if (branch.name.startsWith(ORIGIN_PREFIX)) {
+            name = branch.name.replace(ORIGIN_PREFIX, '');
+          }
+
+          branchesNames.add(name);
+        }
+      }
+    }
+
+    return Array.from(branchesNames);
   }
 
   get activeRepositories() {
