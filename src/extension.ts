@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import vscode from 'vscode';
-import { DIContainerService } from './DI/DIContainer';
-import { FeatureManagerService } from './services/features/FeatureManagerService';
-import { VscodeContextService } from './services/base/VscodeContextService';
+import { DIContainerService } from './DI/DIContainer.js';
+import { FeatureManagerService } from './services/features/FeatureManagerService.js';
+import { VscodeContextService } from './services/base/VscodeContextService.js';
 
 const diContainerService = new DIContainerService();
 

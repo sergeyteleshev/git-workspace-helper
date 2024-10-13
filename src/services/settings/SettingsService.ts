@@ -1,7 +1,7 @@
-import { singleton } from 'tsyringe';
+import { injectable } from '@wroud/di';
 import vscode from 'vscode';
 
-@singleton()
+@injectable()
 export class SettingsService {
   private readonly config: vscode.WorkspaceConfiguration;
   readonly configName = 'git-workspace-helper';

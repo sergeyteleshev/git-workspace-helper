@@ -1,39 +1,40 @@
 import vscode from 'vscode';
-import { inject, injectable } from 'tsyringe';
-import { VscodeContextService } from '../base/VscodeContextService';
-import { GitCommitFeatureService } from './GitCommitFeatureService';
-import { GitPullFeatureService } from './GitPullFeatureService';
-import { GitDiscardChangesFeaturesService } from './GitDiscardChangesFeaturesService';
-import { GitMergeFeatureService } from './GitMergeFeatureService';
-import { GitPushFeatureService } from './GitPushFeatureService';
-import { ConfigureActiveRepositoriesFeatureService } from './ConfigureActiveRepositoriesFeatureService';
-import { GitStageChangesFeatureService } from './GitStageChangesFeatureService';
-import { GitUnstageChangesFeatureService } from './GitUnstageChangesFeatureService';
-import { GitCheckoutFeatureService } from './GitCheckoutFeatureService';
-import { GitCreateBranchFeatureService } from './GitCreateBranchFeatureService';
+import { injectable } from '@wroud/di';
+import { VscodeContextService } from '../base/VscodeContextService.js';
+import { GitCommitFeatureService } from './GitCommitFeatureService.js';
+import { GitPullFeatureService } from './GitPullFeatureService.js';
+import { GitDiscardChangesFeaturesService } from './GitDiscardChangesFeaturesService.js';
+import { GitMergeFeatureService } from './GitMergeFeatureService.js';
+import { GitPushFeatureService } from './GitPushFeatureService.js';
+import { ConfigureActiveRepositoriesFeatureService } from './ConfigureActiveRepositoriesFeatureService.js';
+import { GitStageChangesFeatureService } from './GitStageChangesFeatureService.js';
+import { GitUnstageChangesFeatureService } from './GitUnstageChangesFeatureService.js';
+import { GitCheckoutFeatureService } from './GitCheckoutFeatureService.js';
+import { GitCreateBranchFeatureService } from './GitCreateBranchFeatureService.js';
 
-@injectable()
+@injectable(() => [
+  GitCommitFeatureService,
+  GitPullFeatureService,
+  GitDiscardChangesFeaturesService,
+  GitMergeFeatureService,
+  GitPushFeatureService,
+  ConfigureActiveRepositoriesFeatureService,
+  GitStageChangesFeatureService,
+  GitUnstageChangesFeatureService,
+  GitCheckoutFeatureService,
+  GitCreateBranchFeatureService,
+])
 export class FeatureManagerService {
   constructor(
-    @inject(GitCommitFeatureService)
     private readonly gitCommitFeatureService: GitCommitFeatureService,
-    @inject(GitPullFeatureService)
     private readonly gitPullFeatureService: GitPullFeatureService,
-    @inject(GitDiscardChangesFeaturesService)
     private readonly gitDiscardChangesFeaturesService: GitDiscardChangesFeaturesService,
-    @inject(GitMergeFeatureService)
     private readonly gitMergeFeatureService: GitMergeFeatureService,
-    @inject(GitPushFeatureService)
     private readonly gitPushFeatureService: GitPushFeatureService,
-    @inject(ConfigureActiveRepositoriesFeatureService)
     private readonly configureActiveRepositoriesFeatureService: ConfigureActiveRepositoriesFeatureService,
-    @inject(GitStageChangesFeatureService)
     private readonly gitStageChangesFeatureService: GitStageChangesFeatureService,
-    @inject(GitUnstageChangesFeatureService)
     private readonly gitUnstageChangesFeatureService: GitUnstageChangesFeatureService,
-    @inject(GitCheckoutFeatureService)
     private readonly gitCheckoutFeatureService: GitCheckoutFeatureService,
-    @inject(GitCreateBranchFeatureService)
     private readonly gitCreateBranchFeatureService: GitCreateBranchFeatureService
   ) {
     this.register = this.register.bind(this);

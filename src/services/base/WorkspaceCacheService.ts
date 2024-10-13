@@ -1,5 +1,5 @@
-import { injectable } from 'tsyringe';
-import { VscodeContextService } from './VscodeContextService';
+import { injectable } from '@wroud/di';
+import { VscodeContextService } from './VscodeContextService.js';
 
 @injectable()
 export class WorkSpaceCacheService {

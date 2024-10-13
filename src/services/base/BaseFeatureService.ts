@@ -1,4 +1,4 @@
-import { FeatureAction } from '../../types/feature';
+import { FeatureAction } from '../../types/feature.js';
 
 type TCommand = string | null;
 

@@ -1,11 +1,11 @@
-import { inject, injectable } from 'tsyringe';
+import { injectable } from '@wroud/di';
 import vscode from 'vscode';
-import { isSha } from '../../helpers/isSha';
-import { BaseFeatureService } from '../base/BaseFeatureService';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { SettingsService } from '../settings/SettingsService';
+import { isSha } from '../../helpers/isSha.js';
+import { BaseFeatureService } from '../base/BaseFeatureService.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { SettingsService } from '../settings/SettingsService.js';
 
 enum CheckoutType {
   BranchName = 'By branch name',
@@ -19,14 +19,16 @@ const CHECKOUT_OPTIONS: CheckoutType[] = [
   CheckoutType.DefaultBranch,
 ];
 
-@injectable()
+@injectable(() => [
+  GitRepositoriesService,
+  GitRepositoryService,
+  SettingsService,
+])
 export class GitCheckoutFeatureService extends BaseFeatureService {
   constructor(
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService,
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService,
-    @inject(SettingsService) private readonly settingsService: SettingsService
+    private readonly settingsService: SettingsService
   ) {
     super();
     this.checkout = this.checkout.bind(this);

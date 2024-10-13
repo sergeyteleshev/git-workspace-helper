@@ -1,8 +1,8 @@
 import vscode from 'vscode';
 import { API, GitExtension } from '../../types/git.js';
-import { singleton } from 'tsyringe';
+import { injectable } from '@wroud/di';
 
-@singleton()
+@injectable()
 export class GitService {
   API: API;
 

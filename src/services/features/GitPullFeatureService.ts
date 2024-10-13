@@ -1,15 +1,13 @@
-import { inject, injectable } from 'tsyringe';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { BaseFeatureService } from '../base/BaseFeatureService';
+import { injectable } from '@wroud/di';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { BaseFeatureService } from '../base/BaseFeatureService.js';
 
-@injectable()
+@injectable(() => [GitRepositoriesService, GitRepositoryService])
 export class GitPullFeatureService extends BaseFeatureService {
   constructor(
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService,
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();

@@ -1,18 +1,16 @@
-import { inject, injectable } from 'tsyringe';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
+import { injectable } from '@wroud/di';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import vscode from 'vscode';
-import { CustomQuickPick } from '../../ui/CustomQuickPick';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { isNotNullDefined } from '../../helpers/isNotNullDefined';
-import { BaseFeatureService } from '../base/BaseFeatureService';
+import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
+import { BaseFeatureService } from '../base/BaseFeatureService.js';
 
-@injectable()
+@injectable(() => [GitRepositoryService, GitRepositoriesService])
 export class GitCreateBranchFeatureService extends BaseFeatureService {
   constructor(
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService,
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService
   ) {
     super();

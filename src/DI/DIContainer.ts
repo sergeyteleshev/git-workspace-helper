@@ -1,9 +1,19 @@
-import { container } from 'tsyringe';
-import { constructor } from 'tsyringe/dist/typings/types';
-import { SERVICES_CLASS_REGISTRY } from '../services/servicesClassRegistry';
+import { SingleServiceType } from '@wroud/di/types';
+import { SERVICES_CLASS_REGISTRY } from '../services/servicesClassRegistry.js';
+import { IServiceProvider, ServiceContainerBuilder } from '@wroud/di';
 
-export class DIContainerService {
+type TDIContainerService = {
+  run: () => void;
+  getByClassName: <T>(classObj: SingleServiceType<T>) => T;
+  dispose: () => Promise<void>;
+  container: ServiceContainerBuilder;
+  provider: IServiceProvider;
+};
+
+export class DIContainerService implements TDIContainerService {
   static instance: DIContainerService;
+  readonly container: ServiceContainerBuilder = new ServiceContainerBuilder();
+  readonly provider: IServiceProvider = this.container.build();
 
   constructor() {
     if (DIContainerService.instance) {
@@ -19,24 +29,23 @@ export class DIContainerService {
 
   private registerServices() {
     for (const Service of SERVICES_CLASS_REGISTRY) {
-      if (!container.isRegistered(Service)) {
-        container.register<typeof Service>(Service, {
-          useClass: Service as constructor<typeof Service>,
-        });
-      }
+      // TODO test this first if this works fine
+      // if (this.provider.getService(Service)) {
+      //   continue;
+      // }
+
+      this.container.addSingleton(Service);
     }
   }
 
-  getByClassName<T>(classObj: constructor<T>): T {
-    return container.resolve<T>(classObj);
+  getByClassName<T>(classObj: SingleServiceType<T>): T {
+    return this.provider.getService(classObj);
   }
 
   run() {
     this.registerServices();
   }
 
-  async dispose() {
-    await container.dispose();
-    container.clearInstances();
-  }
+  // TODO implement dispose
+  async dispose() {}
 }

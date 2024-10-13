@@ -1,10 +1,10 @@
-import { inject, singleton } from 'tsyringe';
+import { injectable } from '@wroud/di';
 import { GitService } from './GitService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 
-@singleton()
+@injectable(() => [GitService])
 export class GitRepositoryService {
-  constructor(@inject(GitService) private readonly gitService: GitService) {
+  constructor(private readonly gitService: GitService) {
     this.findClosestCommitByDate = this.findClosestCommitByDate.bind(this);
     this.goTo = this.goTo.bind(this);
     this.getCommitInfo = this.getCommitInfo.bind(this);
