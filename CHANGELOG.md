@@ -72,3 +72,8 @@
 
 - Refactors of the code base
 - Changes few main icons in the "Source Control" feature
+
+### 0.2.4
+
+- Refactors the code base
+- Adds Wroud Foundation DI library
