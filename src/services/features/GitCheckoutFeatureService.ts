@@ -1,11 +1,11 @@
 import { injectable } from '@wroud/di';
 import vscode from 'vscode';
 import { isSha } from '../../helpers/isSha.js';
-import { BaseFeatureService } from '../base/BaseFeatureService.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { SettingsService } from '../settings/SettingsService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
 enum CheckoutType {
   BranchName = 'By branch name',
@@ -24,7 +24,7 @@ const CHECKOUT_OPTIONS: CheckoutType[] = [
   GitRepositoryService,
   SettingsService,
 ])
-export class GitCheckoutFeatureService extends BaseFeatureService {
+export class GitCheckoutFeatureService extends ExtensionSubscription {
   constructor(
     private readonly gitRepositoriesService: GitRepositoriesService,
     private readonly repositoryGitService: GitRepositoryService,
@@ -35,7 +35,13 @@ export class GitCheckoutFeatureService extends BaseFeatureService {
     this.checkoutByBranchName = this.checkoutByBranchName.bind(this);
     this.checkoutBySha = this.checkoutBySha.bind(this);
     this.checkoutToDefaultBranch = this.checkoutToDefaultBranch.bind(this);
-    this.setFeature('git-workspace-helper.checkout', this.checkout);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
+      'git-workspace-helper.checkout',
+      this.checkout
+    );
   }
 
   async checkoutByBranchName() {

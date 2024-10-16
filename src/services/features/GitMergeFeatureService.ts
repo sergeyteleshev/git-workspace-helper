@@ -3,17 +3,20 @@ import vscode from 'vscode';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { BaseFeatureService } from '../base/BaseFeatureService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
 @injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitMergeFeatureService extends BaseFeatureService {
+export class GitMergeFeatureService extends ExtensionSubscription {
   constructor(
     private readonly gitRepositoriesService: GitRepositoriesService,
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();
     this.merge = this.merge.bind(this);
-    this.setFeature('git-workspace-helper.merge', this.merge);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand('git-workspace-helper.merge', this.merge);
   }
 
   async merge() {

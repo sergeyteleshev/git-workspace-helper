@@ -2,17 +2,21 @@ import { injectable } from '@wroud/di';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
-import { BaseFeatureService } from '../base/BaseFeatureService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
+import vscode from 'vscode';
 
 @injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitPullFeatureService extends BaseFeatureService {
+export class GitPullFeatureService extends ExtensionSubscription {
   constructor(
     private readonly gitRepositoriesService: GitRepositoriesService,
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();
     this.pull = this.pull.bind(this);
-    this.setFeature('git-workspace-helper.pull', this.pull);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand('git-workspace-helper.pull', this.pull);
   }
 
   async pull() {

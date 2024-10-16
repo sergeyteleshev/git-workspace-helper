@@ -5,17 +5,23 @@ import vscode from 'vscode';
 import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
-import { BaseFeatureService } from '../base/BaseFeatureService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
 @injectable(() => [GitRepositoryService, GitRepositoriesService])
-export class GitCreateBranchFeatureService extends BaseFeatureService {
+export class GitCreateBranchFeatureService extends ExtensionSubscription {
   constructor(
     private readonly repositoryGitService: GitRepositoryService,
     private readonly gitRepositoriesService: GitRepositoriesService
   ) {
     super();
     this.createBranches = this.createBranches.bind(this);
-    this.setFeature('git-workspace-helper.createBranch', this.createBranches);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
+      'git-workspace-helper.createBranch',
+      this.createBranches
+    );
   }
 
   async createBranches() {

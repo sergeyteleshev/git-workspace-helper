@@ -1,18 +1,21 @@
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { BaseFeatureService } from '../base/BaseFeatureService.js';
+import vscode from 'vscode';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
 import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
 import { injectable } from '@wroud/di';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
 @injectable(() => [GitRepositoriesService])
-export class ConfigureActiveRepositoriesFeatureService extends BaseFeatureService {
+export class ConfigureActiveRepositoriesFeatureService extends ExtensionSubscription {
   constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.configureActiveRepositories =
       this.configureActiveRepositories.bind(this);
+  }
 
-    this.setFeature(
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
       'git-workspace-helper.configureActiveRepositories',
       this.configureActiveRepositories
     );

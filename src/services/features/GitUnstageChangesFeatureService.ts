@@ -2,18 +2,24 @@ import { injectable } from '@wroud/di';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { BaseFeatureService } from '../base/BaseFeatureService.js';
+import vscode from 'vscode';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
 @injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitUnstageChangesFeatureService extends BaseFeatureService {
+export class GitUnstageChangesFeatureService extends ExtensionSubscription {
   constructor(
     private readonly gitRepositoriesService: GitRepositoriesService,
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();
     this.unstageChanges = this.unstageChanges.bind(this);
+  }
 
-    this.setFeature('git-workspace-helper.unstageChanges', this.unstageChanges);
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
+      'git-workspace-helper.unstageChanges',
+      this.unstageChanges
+    );
   }
 
   async unstageChanges() {
