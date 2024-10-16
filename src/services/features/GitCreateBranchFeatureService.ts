@@ -1,23 +1,27 @@
-import { inject, injectable } from 'tsyringe';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
+import { injectable } from '@wroud/di';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import vscode from 'vscode';
-import { CustomQuickPick } from '../../ui/CustomQuickPick';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { isNotNullDefined } from '../../helpers/isNotNullDefined';
-import { BaseFeatureService } from '../base/BaseFeatureService';
+import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
-@injectable()
-export class GitCreateBranchFeatureService extends BaseFeatureService {
+@injectable(() => [GitRepositoryService, GitRepositoriesService])
+export class GitCreateBranchFeatureService extends ExtensionSubscription {
   constructor(
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService,
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService
   ) {
     super();
     this.createBranches = this.createBranches.bind(this);
-    this.setFeature('git-workspace-helper.createBranch', this.createBranches);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
+      'git-workspace-helper.createBranch',
+      this.createBranches
+    );
   }
 
   async createBranches() {

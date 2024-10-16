@@ -1,11 +1,11 @@
-import { inject, injectable } from 'tsyringe';
+import { injectable } from '@wroud/di';
 import vscode from 'vscode';
-import { isSha } from '../../helpers/isSha';
-import { BaseFeatureService } from '../base/BaseFeatureService';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { SettingsService } from '../settings/SettingsService';
+import { isSha } from '../../helpers/isSha.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { SettingsService } from '../settings/SettingsService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
 enum CheckoutType {
   BranchName = 'By branch name',
@@ -19,21 +19,29 @@ const CHECKOUT_OPTIONS: CheckoutType[] = [
   CheckoutType.DefaultBranch,
 ];
 
-@injectable()
-export class GitCheckoutFeatureService extends BaseFeatureService {
+@injectable(() => [
+  GitRepositoriesService,
+  GitRepositoryService,
+  SettingsService,
+])
+export class GitCheckoutFeatureService extends ExtensionSubscription {
   constructor(
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService,
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService,
-    @inject(SettingsService) private readonly settingsService: SettingsService
+    private readonly settingsService: SettingsService
   ) {
     super();
     this.checkout = this.checkout.bind(this);
     this.checkoutByBranchName = this.checkoutByBranchName.bind(this);
     this.checkoutBySha = this.checkoutBySha.bind(this);
     this.checkoutToDefaultBranch = this.checkoutToDefaultBranch.bind(this);
-    this.setFeature('git-workspace-helper.checkout', this.checkout);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
+      'git-workspace-helper.checkout',
+      this.checkout
+    );
   }
 
   async checkoutByBranchName() {

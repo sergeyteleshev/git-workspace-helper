@@ -1,21 +1,22 @@
-import { inject, injectable } from 'tsyringe';
+import { injectable } from '@wroud/di';
 import vscode from 'vscode';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { BaseFeatureService } from '../base/BaseFeatureService';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
-@injectable()
-export class GitMergeFeatureService extends BaseFeatureService {
+@injectable(() => [GitRepositoriesService, GitRepositoryService])
+export class GitMergeFeatureService extends ExtensionSubscription {
   constructor(
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService,
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();
     this.merge = this.merge.bind(this);
-    this.setFeature('git-workspace-helper.merge', this.merge);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand('git-workspace-helper.merge', this.merge);
   }
 
   async merge() {

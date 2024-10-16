@@ -1,21 +1,21 @@
-import { inject, injectable } from 'tsyringe';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { BaseFeatureService } from '../base/BaseFeatureService';
-import { isNotNullDefined } from '../../helpers/isNotNullDefined';
-import { CustomQuickPick } from '../../ui/CustomQuickPick';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import vscode from 'vscode';
+import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
+import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
+import { injectable } from '@wroud/di';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
-@injectable()
-export class ConfigureActiveRepositoriesFeatureService extends BaseFeatureService {
-  constructor(
-    @inject(GitRepositoriesService)
-    private readonly gitRepositoriesService: GitRepositoriesService
-  ) {
+@injectable(() => [GitRepositoriesService])
+export class ConfigureActiveRepositoriesFeatureService extends ExtensionSubscription {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.configureActiveRepositories =
       this.configureActiveRepositories.bind(this);
+  }
 
-    this.setFeature(
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
       'git-workspace-helper.configureActiveRepositories',
       this.configureActiveRepositories
     );

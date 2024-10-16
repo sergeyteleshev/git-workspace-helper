@@ -1,20 +1,18 @@
-import { inject, injectable } from 'tsyringe';
-import { GitService } from './GitService';
-import { WorkSpaceCacheService } from '../base/WorkspaceCacheService';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { isNotNullDefined } from '../../helpers/isNotNullDefined';
-import { GitRepositoryService } from './GitRepositoryService';
+import { injectable } from '@wroud/di';
+import { GitService } from './GitService.js';
+import { WorkspaceCacheService } from '../base/WorkspaceCacheService.js';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
+import { GitRepositoryService } from './GitRepositoryService.js';
 
 export const ACTIVE_REPOSITORIES_CACHE_KEY = 'ACTIVE_REPOSITORIES';
 const ORIGIN_PREFIX = 'origin/';
 
-@injectable()
+@injectable(() => [GitService, WorkspaceCacheService, GitRepositoryService])
 export class GitRepositoriesService {
   constructor(
-    @inject(GitService) private readonly gitService: GitService,
-    @inject(WorkSpaceCacheService)
-    private readonly workspaceCacheService: WorkSpaceCacheService,
-    @inject(GitRepositoryService)
+    private readonly gitService: GitService,
+    private readonly workspaceCacheService: WorkspaceCacheService,
     private readonly gitRepositoryService: GitRepositoryService
   ) {
     this.setActiveRepositories = this.setActiveRepositories.bind(this);

@@ -1,8 +1,9 @@
 {
+  "type": "module",
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -11,7 +12,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./dist/extension.js",
+  "main": "./dist/extension.cjs",
   "publisher": "stelesh",
   "repository": {
     "type": "git",
@@ -162,7 +163,6 @@
     "vscode.git"
   ],
   "dependencies": {
-    "reflect-metadata": "^0.2.2",
-    "tsyringe": "^4.8.0"
+    "@wroud/di": "^0.12.0"
   }
 }

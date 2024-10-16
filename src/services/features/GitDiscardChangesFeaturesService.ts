@@ -1,24 +1,27 @@
 // DiscardChangesFeaturesService.ts
 
-import { inject, injectable } from 'tsyringe';
+import { injectable } from '@wroud/di';
 import vscode from 'vscode';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { BaseFeatureService } from '../base/BaseFeatureService';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
 
-@injectable()
-export class GitDiscardChangesFeaturesService extends BaseFeatureService {
+@injectable(() => [GitRepositoriesService, GitRepositoryService])
+export class GitDiscardChangesFeaturesService extends ExtensionSubscription {
   constructor(
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService,
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();
     this.discardChanges = this.discardChanges.bind(this);
+  }
 
-    this.setFeature('git-workspace-helper.discardChanges', this.discardChanges);
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
+      'git-workspace-helper.discardChanges',
+      this.discardChanges
+    );
   }
 
   async discardChanges() {

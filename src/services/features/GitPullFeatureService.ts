@@ -1,20 +1,22 @@
-import { inject, injectable } from 'tsyringe';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { BaseFeatureService } from '../base/BaseFeatureService';
+import { injectable } from '@wroud/di';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
+import vscode from 'vscode';
 
-@injectable()
-export class GitPullFeatureService extends BaseFeatureService {
+@injectable(() => [GitRepositoriesService, GitRepositoryService])
+export class GitPullFeatureService extends ExtensionSubscription {
   constructor(
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService,
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();
     this.pull = this.pull.bind(this);
-    this.setFeature('git-workspace-helper.pull', this.pull);
+  }
+
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand('git-workspace-helper.pull', this.pull);
   }
 
   async pull() {

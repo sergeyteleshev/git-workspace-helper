@@ -1,33 +1,33 @@
-import { injectable } from 'tsyringe';
-import { VscodeContextService } from './VscodeContextService';
+import { injectable } from '@wroud/di';
+import { IExtensionContext } from '../../IExtensionContext.js';
 
-@injectable()
-export class WorkSpaceCacheService {
-  constructor() {}
+@injectable(() => [IExtensionContext])
+export class WorkspaceCacheService {
+  constructor(private readonly context: IExtensionContext) {}
 
   get<T>(key: string): T | undefined {
-    return VscodeContextService.context.workspaceState.get<T>(key);
+    return this.context.workspaceState.get<T>(key);
   }
 
   set<T>(key: string, value: T): void {
-    VscodeContextService.context.workspaceState.update(key, value);
+    this.context.workspaceState.update(key, value);
   }
 
   delete(key: string): void {
-    VscodeContextService.context.workspaceState.update(key, undefined);
+    this.context.workspaceState.update(key, undefined);
   }
 
   clear(): void {
     this.keys().forEach((key) => {
-      VscodeContextService.context.workspaceState.update(key, undefined);
+      this.delete(key);
     });
   }
 
   has(key: string): boolean {
-    return VscodeContextService.context.workspaceState.get(key) !== undefined;
+    return this.context.workspaceState.get(key) !== undefined;
   }
 
   keys(): string[] {
-    return [...VscodeContextService.context.workspaceState.keys()];
+    return [...this.context.workspaceState.keys()];
   }
 }

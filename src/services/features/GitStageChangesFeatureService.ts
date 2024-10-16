@@ -1,21 +1,25 @@
-import { inject, injectable } from 'tsyringe';
-import { getRepositoryName } from '../../helpers/getRepositoryName';
-import { GitRepositoriesService } from '../git/GitRepositoriesService';
-import { GitRepositoryService } from '../git/GitRepositoryService';
-import { BaseFeatureService } from '../base/BaseFeatureService';
+import { injectable } from '@wroud/di';
+import { getRepositoryName } from '../../helpers/getRepositoryName.js';
+import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
+import { GitRepositoryService } from '../git/GitRepositoryService.js';
+import { ExtensionSubscription } from './ExtensionSubscription.js';
+import vscode from 'vscode';
 
-@injectable()
-export class GitStageChangesFeatureService extends BaseFeatureService {
+@injectable(() => [GitRepositoriesService, GitRepositoryService])
+export class GitStageChangesFeatureService extends ExtensionSubscription {
   constructor(
-    @inject(GitRepositoriesService)
     private readonly gitRepositoriesService: GitRepositoriesService,
-    @inject(GitRepositoryService)
     private readonly repositoryGitService: GitRepositoryService
   ) {
     super();
     this.stageChanges = this.stageChanges.bind(this);
+  }
 
-    this.setFeature('git-workspace-helper.stageChanges', this.stageChanges);
+  async activate(): Promise<void> {
+    vscode.commands.registerCommand(
+      'git-workspace-helper.stageChanges',
+      this.stageChanges
+    );
   }
 
   async stageChanges() {

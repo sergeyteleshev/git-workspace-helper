@@ -1,28 +1,39 @@
-import 'reflect-metadata';
+import './services/module.js';
 import vscode from 'vscode';
-import { DIContainerService } from './DI/DIContainer';
-import { FeatureManagerService } from './services/features/FeatureManagerService';
-import { VscodeContextService } from './services/base/VscodeContextService';
+import { ModuleRegistry, ServiceContainerBuilder } from '@wroud/di';
+import { IExtensionContext } from './IExtensionContext.js';
+import { ExtensionSubscription } from './services/features/ExtensionSubscription.js';
 
-const diContainerService = new DIContainerService();
-
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   if (!vscode.workspace.workspaceFolders?.length) {
     return;
   }
 
-  VscodeContextService.context = context;
+  const builder = new ServiceContainerBuilder();
 
-  diContainerService.run();
+  builder.addSingleton(IExtensionContext, () => context);
 
-  const featureManagerService =
-    diContainerService.getByClassName<FeatureManagerService>(
-      FeatureManagerService
-    );
+  for (const module of ModuleRegistry) {
+    await module.configure(builder);
+  }
 
-  featureManagerService.register();
+  const serviceProvider = builder.build();
+
+  for (const subscription of serviceProvider.getServices(
+    ExtensionSubscription
+  )) {
+    await subscription.activate();
+  }
+
+  context.subscriptions.push({
+    dispose: () => serviceProvider[Symbol.asyncDispose](),
+  });
 }
 
-export async function deactivate() {
-  diContainerService.dispose();
+export async function deactivate(context: vscode.ExtensionContext) {
+  context.subscriptions.forEach((subscription) => {
+    if (typeof subscription.dispose === 'function') {
+      subscription.dispose();
+    }
+  });
 }
