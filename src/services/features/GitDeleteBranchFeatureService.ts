@@ -3,7 +3,7 @@ import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import vscode from 'vscode';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
-import { ExtensionSubscription } from './ExtensionSubscription.js';
+import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
 
 @injectable(() => [GitRepositoryService, GitRepositoriesService])
 export class GitDeleteBranchFeatureService extends ExtensionSubscription {

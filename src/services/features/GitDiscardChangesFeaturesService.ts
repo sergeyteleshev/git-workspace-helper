@@ -5,7 +5,7 @@ import vscode from 'vscode';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { ExtensionSubscription } from './ExtensionSubscription.js';
+import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
 
 @injectable(() => [GitRepositoriesService, GitRepositoryService])
 export class GitDiscardChangesFeaturesService extends ExtensionSubscription {
