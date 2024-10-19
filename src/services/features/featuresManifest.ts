@@ -9,11 +9,15 @@ import { GitPullFeatureService } from './GitPullFeatureService.js';
 import { GitPushFeatureService } from './GitPushFeatureService.js';
 import { GitStageChangesFeatureService } from './GitStageChangesFeatureService.js';
 import { GitUnstageChangesFeatureService } from './GitUnstageChangesFeatureService.js';
+import { GitDeleteBranchFeatureService } from './GitDeleteBranchFeatureService.js';
+import { GitCreateTagFeatureService } from './GitCreateTagFeatureService.js';
+import { GitDeleteTagFeatureService } from './GitDeleteTagFeatureService.js';
 
 export const FEATURES_MANIFEST: IManifest = [
   [GitCheckoutFeatureService, 'singleton'],
   [GitCommitFeatureService, 'singleton'],
   [GitCreateBranchFeatureService, 'singleton'],
+  [GitDeleteBranchFeatureService, 'singleton'],
   [GitDiscardChangesFeaturesService, 'singleton'],
   [ConfigureActiveRepositoriesFeatureService, 'singleton'],
   [GitMergeFeatureService, 'singleton'],
@@ -21,4 +25,6 @@ export const FEATURES_MANIFEST: IManifest = [
   [GitPushFeatureService, 'singleton'],
   [GitStageChangesFeatureService, 'singleton'],
   [GitUnstageChangesFeatureService, 'singleton'],
+  [GitCreateTagFeatureService, 'singleton'],
+  [GitDeleteTagFeatureService, 'singleton'],
 ];

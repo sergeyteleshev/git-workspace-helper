@@ -42,6 +42,28 @@ export class GitRepositoriesService {
     return this.gitService.API.repositories ?? [];
   }
 
+  async getTagsNames() {
+    const tagsNames = new Set<string>();
+
+    for (const repo of this.activeRepositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      const tags = await this.gitRepositoryService.getTags(name);
+
+      for (const tag of tags) {
+        if (tag.name) {
+          tagsNames.add(tag.name);
+        }
+      }
+    }
+
+    return Array.from(tagsNames);
+  }
+
   async getBranchesNames() {
     const branchesNames = new Set<string>();
 

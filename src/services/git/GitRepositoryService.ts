@@ -22,6 +22,28 @@ export class GitRepositoryService {
     );
   }
 
+  getCurrentBranch(repoName: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    return repo.state.HEAD;
+  }
+
+  async getTags(name: string) {
+    const repo = this.getRepository(name);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    const branches = await repo.getRefs({});
+
+    return branches.filter((branch) => branch.type === 2);
+  }
+
   async getBranches(name: string) {
     const repo = this.getRepository(name);
 
@@ -43,6 +65,46 @@ export class GitRepositoryService {
     }
 
     await repo.createBranch(branchName, true);
+  }
+
+  async deleteBranch(repoName: string, branchName: string, force = false) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    await repo.deleteBranch(branchName, force);
+  }
+
+  async getCurrentUpstream(repoName: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    return repo.state.HEAD?.upstream;
+  }
+
+  async createTag(repoName: string, tagName: string, upstream: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    await repo.tag(tagName, upstream);
+  }
+
+  async deleteTag(repoName: string, tagName: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    await repo.deleteTag(tagName);
   }
 
   async findClosestCommitByDate(repoName: string, date: Date) {
@@ -197,7 +259,7 @@ export class GitRepositoryService {
     }
 
     try {
-      const branch = await repo.getBranch(branchName);
+      const branch = await this.getBranch(repoName, branchName);
 
       if (!branch.name) {
         return;
@@ -205,6 +267,16 @@ export class GitRepositoryService {
 
       await repo.merge(branch.name);
     } catch {}
+  }
+
+  getBranch(repoName: string, name: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    return repo.getBranch(name);
   }
 
   commit(repoName: string, name: string) {

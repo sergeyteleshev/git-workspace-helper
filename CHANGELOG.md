@@ -73,7 +73,13 @@
 - Refactors of the code base
 - Changes few main icons in the "Source Control" feature
 
-### 0.2.4
+### 0.2.5
 
 - Refactors the code base
 - Adds Wroud Foundation DI library
+
+### 0.2.6
+
+- Adds feature "Create tag"
+- Adds feature "Delete tag"
+- Adds feature "Delete branch"

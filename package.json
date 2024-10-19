@@ -3,7 +3,7 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -40,6 +40,21 @@
         "command": "git-workspace-helper.createBranch",
         "title": "Git Workspace Helper: Create Branch",
         "icon": "$(git-branch-create)"
+      },
+      {
+        "command": "git-workspace-helper.deleteBranch",
+        "title": "Git Workspace Helper: Delete Branch",
+        "icon": "$(git-branch-delete)"
+      },
+      {
+        "command": "git-workspace-helper.createTag",
+        "title": "Git Workspace Helper: Create Tag",
+        "icon": "$(tag-add)"
+      },
+      {
+        "command": "git-workspace-helper.deleteTag",
+        "title": "Git Workspace Helper: Delete Tag",
+        "icon": "$(tag-remove)"
       },
       {
         "command": "git-workspace-helper.discardChanges",
@@ -81,6 +96,18 @@
         },
         {
           "command": "git-workspace-helper.createBranch",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.createTag",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.deleteTag",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.deleteBranch",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
