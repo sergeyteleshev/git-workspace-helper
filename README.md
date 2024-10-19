@@ -20,10 +20,13 @@
 - Merge All To Current Branch - Merges branch by name to all repositories current branch
 - Pull All - Pulls coming code in each repository
 - Create branch - Creates new branch for for all selected repositories
+- Delete branch - Deletes branch for all selected repositories
 - Configure Active Repositories - Sets active repositories which will be used for other listed commands. By default all repositories in workspace are selected
 - Checkout To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
 - Checkout To Branch - switches repository to the specific branch. If branch is not found it stays as it is.
 - Checkout To Default Branch - switches each repository to the default branches. The default branch can be configured in VSCode settings
+- Create Tag - Creates new tag for for all selected repositories
+- Delete Tag - Deletes tag for all selected repositories
 - Discard Changes - Discard changes in each repository
 - Stage All - Stages all changes in each repository
 - Unstage All - Unstages all changes in each repository

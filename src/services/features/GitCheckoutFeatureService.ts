@@ -5,7 +5,7 @@ import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { SettingsService } from '../settings/SettingsService.js';
-import { ExtensionSubscription } from './ExtensionSubscription.js';
+import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
 
 enum CheckoutType {
   BranchName = 'By branch name',

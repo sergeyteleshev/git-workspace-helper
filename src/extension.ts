@@ -2,7 +2,7 @@ import './services/module.js';
 import vscode from 'vscode';
 import { ModuleRegistry, ServiceContainerBuilder } from '@wroud/di';
 import { IExtensionContext } from './IExtensionContext.js';
-import { ExtensionSubscription } from './services/features/ExtensionSubscription.js';
+import { ExtensionSubscription } from './services/base/ExtensionSubscription.js';
 
 export async function activate(context: vscode.ExtensionContext) {
   if (!vscode.workspace.workspaceFolders?.length) {

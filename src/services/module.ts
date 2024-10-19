@@ -1,5 +1,5 @@
 import { ModuleRegistry } from '@wroud/di';
-import { ExtensionSubscription } from './features/ExtensionSubscription.js';
+import { ExtensionSubscription } from './base/ExtensionSubscription.js';
 import { IManifest } from '../types/IManifest.js';
 import { BASE_MANIFEST } from './base/baseManifest.js';
 import { FEATURES_MANIFEST } from './features/featuresManifest.js';
