@@ -83,3 +83,4 @@
 - Adds feature "Create tag"
 - Adds feature "Delete tag"
 - Adds feature "Delete branch"
+- Groups features to sub menus

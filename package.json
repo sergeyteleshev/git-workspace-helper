@@ -87,23 +87,28 @@
         "icon": "$(gear)"
       }
     ],
+    "submenus": [
+      {
+        "id": "gwh:branches",
+        "label": "Branch"
+      },
+      {
+        "id": "gwh:tags",
+        "label": "Tag"
+      },
+      {
+        "id": "gwh:changes",
+        "label": "Changes"
+      },
+      {
+        "id": "gwh:settings",
+        "label": "Settings"
+      }
+    ],
     "menus": {
-      "scm/title": [
-        {
-          "command": "git-workspace-helper.pull",
-          "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
-        },
+      "gwh:branches": [
         {
           "command": "git-workspace-helper.createBranch",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
-        },
-        {
-          "command": "git-workspace-helper.createTag",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
-        },
-        {
-          "command": "git-workspace-helper.deleteTag",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
@@ -111,16 +116,61 @@
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
+          "command": "git-workspace-helper.merge",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "gwh:settings": [
+        {
           "command": "git-workspace-helper.configureActiveRepositories",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "gwh:tags": [
+        {
+          "command": "git-workspace-helper.createTag",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.deleteTag",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "gwh:changes": [
+        {
+          "command": "git-workspace-helper.discardChanges",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.stageChanges",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.unstageChanges",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "scm/title": [
+        {
+          "submenu": "gwh:branches"
+        },
+        {
+          "submenu": "gwh:tags"
+        },
+        {
+          "submenu": "gwh:changes"
+        },
+        {
+          "submenu": "gwh:settings"
+        },
+        {
+          "command": "git-workspace-helper.pull",
+          "group": "navigation",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
           "command": "git-workspace-helper.push",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
-        },
-        {
-          "command": "git-workspace-helper.merge",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
@@ -131,18 +181,6 @@
         {
           "command": "git-workspace-helper.commit",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
-        },
-        {
-          "command": "git-workspace-helper.discardChanges",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
-        },
-        {
-          "command": "git-workspace-helper.unstageChanges",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
-        },
-        {
-          "command": "git-workspace-helper.stageChanges",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         }
       ]
