@@ -42,8 +42,8 @@ export class GitRepositoriesService {
     return this.gitService.API.repositories ?? [];
   }
 
-  async getTagsNames() {
-    const tagsNames = new Set<string>();
+  async getTagsNames(): Promise<string[]> {
+    const allTagsNames: string[] = [];
 
     for (const repo of this.activeRepositories) {
       const name = getRepositoryName(repo);
@@ -54,18 +54,16 @@ export class GitRepositoriesService {
 
       const tags = await this.gitRepositoryService.getTags(name);
 
-      for (const tag of tags) {
-        if (tag.name) {
-          tagsNames.add(tag.name);
-        }
-      }
+      allTagsNames.push(
+        ...tags.map((tag) => tag.name).filter(isNotNullDefined)
+      );
     }
 
-    return Array.from(tagsNames);
+    return Array.from(new Set(allTagsNames));
   }
 
-  async getBranchesNames() {
-    const branchesNames = new Set<string>();
+  async getBranchesNames(): Promise<string[]> {
+    const allBranchesNames: string[] = [];
 
     for (const repo of this.activeRepositories) {
       const name = getRepositoryName(repo);
@@ -75,21 +73,26 @@ export class GitRepositoriesService {
       }
 
       const branches = await this.gitRepositoryService.getBranches(name);
+      const branchesNames = branches
+        .map((branch) => {
+          if (branch.name) {
+            let name = branch.name;
 
-      for (const branch of branches) {
-        if (branch.name) {
-          let name = branch.name;
+            if (branch.name.startsWith(ORIGIN_PREFIX)) {
+              name = branch.name.replace(ORIGIN_PREFIX, '');
+            }
 
-          if (branch.name.startsWith(ORIGIN_PREFIX)) {
-            name = branch.name.replace(ORIGIN_PREFIX, '');
+            return name;
           }
 
-          branchesNames.add(name);
-        }
-      }
+          return null;
+        })
+        .filter(isNotNullDefined);
+
+      allBranchesNames.push(...branchesNames);
     }
 
-    return Array.from(branchesNames);
+    return Array.from(new Set(allBranchesNames));
   }
 
   get activeRepositories() {
