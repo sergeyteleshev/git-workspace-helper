@@ -42,6 +42,16 @@ export class GitDeleteTagFeatureService extends ExtensionSubscription {
         continue;
       }
 
+      const currentBranch =
+        this.repositoryGitService.getCurrentBranch(repoName);
+
+      if (currentBranch?.name === tagName) {
+        vscode.window.showErrorMessage(
+          `The branch "${tagName}" is the current branch of the ${repoName}. Please to switch to another branch and try again.`
+        );
+        continue;
+      }
+
       this.repositoryGitService.deleteTag(repoName, tagName);
     }
   }
