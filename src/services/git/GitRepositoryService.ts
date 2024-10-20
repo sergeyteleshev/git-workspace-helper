@@ -289,6 +289,18 @@ export class GitRepositoryService {
     repo.commit(name);
   }
 
+  fetch(repoName: string) {
+    const repo = this.getRepository(repoName);
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    repo.fetch({
+      all: true,
+    });
+  }
+
   push(name: string) {
     const repo = this.getRepository(name);
 

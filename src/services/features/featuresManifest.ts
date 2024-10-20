@@ -12,6 +12,7 @@ import { GitUnstageChangesFeatureService } from './GitUnstageChangesFeatureServi
 import { GitDeleteBranchFeatureService } from './GitDeleteBranchFeatureService.js';
 import { GitCreateTagFeatureService } from './GitCreateTagFeatureService.js';
 import { GitDeleteTagFeatureService } from './GitDeleteTagFeatureService.js';
+import { GitFetchFeatureService } from './GitFetchFeatureService.js';
 
 export const FEATURES_MANIFEST: IManifest = [
   [GitCheckoutFeatureService, 'transient'],
@@ -27,4 +28,5 @@ export const FEATURES_MANIFEST: IManifest = [
   [GitUnstageChangesFeatureService, 'transient'],
   [GitCreateTagFeatureService, 'transient'],
   [GitDeleteTagFeatureService, 'transient'],
+  [GitFetchFeatureService, 'transient'],
 ];

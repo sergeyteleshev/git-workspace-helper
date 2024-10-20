@@ -3,7 +3,7 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -55,6 +55,11 @@
         "command": "git-workspace-helper.deleteTag",
         "title": "Git Workspace Helper: Delete Tag",
         "icon": "$(tag-remove)"
+      },
+      {
+        "command": "git-workspace-helper.fetch",
+        "title": "Git Workspace Helper: Fetch All",
+        "icon": "$(repo-sync)"
       },
       {
         "command": "git-workspace-helper.discardChanges",
@@ -162,6 +167,11 @@
         },
         {
           "submenu": "gwh:settings"
+        },
+        {
+          "command": "git-workspace-helper.fetch",
+          "group": "navigation",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
         },
         {
           "command": "git-workspace-helper.pull",
