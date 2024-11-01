@@ -2,15 +2,10 @@ import { injectable } from '@wroud/di';
 import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
 import vscode from 'vscode';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
+@injectable(() => [GitRepositoriesService])
 export class GitFetchFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly gitRepositoryService: GitRepositoryService
-  ) {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.fetch = this.fetch.bind(this);
   }
@@ -21,13 +16,9 @@ export class GitFetchFeatureService extends ExtensionSubscription {
 
   async fetch() {
     for (const repo of this.gitRepositoriesService.activeRepositories) {
-      const repoName = getRepositoryName(repo);
-
-      if (!repoName) {
-        continue;
-      }
-
-      this.gitRepositoryService.fetch(repoName);
+      repo.fetch({
+        all: true,
+      });
     }
   }
 }

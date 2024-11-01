@@ -3,17 +3,15 @@ import { GitService } from './GitService.js';
 import { WorkspaceCacheService } from '../base/WorkspaceCacheService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
-import { GitRepositoryService } from './GitRepositoryService.js';
 
 export const ACTIVE_REPOSITORIES_CACHE_KEY = 'ACTIVE_REPOSITORIES';
 const ORIGIN_PREFIX = 'origin/';
 
-@injectable(() => [GitService, WorkspaceCacheService, GitRepositoryService])
+@injectable(() => [GitService, WorkspaceCacheService])
 export class GitRepositoriesService {
   constructor(
     private readonly gitService: GitService,
-    private readonly workspaceCacheService: WorkspaceCacheService,
-    private readonly gitRepositoryService: GitRepositoryService
+    private readonly workspaceCacheService: WorkspaceCacheService
   ) {
     this.setActiveRepositories = this.setActiveRepositories.bind(this);
     this.restoreDefaultActiveRepositories =
@@ -52,7 +50,8 @@ export class GitRepositoriesService {
         continue;
       }
 
-      const tags = await this.gitRepositoryService.getTags(name);
+      const branches = await repo.getRefs({});
+      const tags = branches.filter((branch) => branch.type === 2);
 
       allTagsNames.push(
         ...tags.map((tag) => tag.name).filter(isNotNullDefined)
@@ -72,7 +71,10 @@ export class GitRepositoriesService {
         continue;
       }
 
-      const branches = await this.gitRepositoryService.getBranches(name);
+      const branches = await repo.getBranches({
+        sort: 'committerdate',
+        remote: true,
+      });
       const branchesNames = branches
         .map((branch) => {
           if (branch.name) {

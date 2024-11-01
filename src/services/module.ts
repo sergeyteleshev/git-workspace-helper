@@ -4,13 +4,13 @@ import { IManifest } from '../types/IManifest.js';
 import { BASE_MANIFEST } from './base/baseManifest.js';
 import { FEATURES_MANIFEST } from './features/featuresManifest.js';
 import { GIT_MANIFEST } from './git/gitManifest.js';
-import { SERVICES_MANIFEST } from './settings/settingsManifest.js';
+import { SETTINGS_MANIFEST } from './settings/settingsManifest.js';
 
 const MANIFESTS: IManifest[] = [
   BASE_MANIFEST,
   FEATURES_MANIFEST,
   GIT_MANIFEST,
-  SERVICES_MANIFEST,
+  SETTINGS_MANIFEST,
 ];
 
 ModuleRegistry.add({

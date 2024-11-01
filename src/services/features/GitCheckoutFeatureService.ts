@@ -3,9 +3,9 @@ import vscode from 'vscode';
 import { isSha } from '../../helpers/isSha.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { SettingsService } from '../settings/SettingsService.js';
 import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { Repository } from '../../types/git.js';
 
 enum CheckoutType {
   BranchName = 'By branch name',
@@ -19,22 +19,16 @@ const CHECKOUT_OPTIONS: CheckoutType[] = [
   CheckoutType.DefaultBranch,
 ];
 
-@injectable(() => [
-  GitRepositoriesService,
-  GitRepositoryService,
-  SettingsService,
-])
+@injectable(() => [GitRepositoriesService, SettingsService])
 export class GitCheckoutFeatureService extends ExtensionSubscription {
   constructor(
     private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService,
     private readonly settingsService: SettingsService
   ) {
     super();
     this.checkout = this.checkout.bind(this);
     this.checkoutByBranchName = this.checkoutByBranchName.bind(this);
     this.checkoutBySha = this.checkoutBySha.bind(this);
-    this.checkoutToDefaultBranch = this.checkoutToDefaultBranch.bind(this);
   }
 
   async activate(): Promise<void> {
@@ -70,8 +64,24 @@ export class GitCheckoutFeatureService extends ExtensionSubscription {
         continue;
       }
 
-      this.repositoryGitService.goTo(name, branchNameOrSha);
+      repo.checkout(branchNameOrSha);
     }
+  }
+
+  private async getRepositoryByCommitSha(sha: string) {
+    for (const repo of this.gitRepositoriesService.activeRepositories) {
+      try {
+        const commit = await repo.getCommit(sha);
+
+        if (commit) {
+          return repo;
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    return null;
   }
 
   async checkoutBySha() {
@@ -91,57 +101,67 @@ export class GitCheckoutFeatureService extends ExtensionSubscription {
       return;
     }
 
-    const initialRepoName =
-      await this.repositoryGitService.getRepositoryNameByCommitSha(
-        shaCandidate
-      );
+    const initialRepo = await this.getRepositoryByCommitSha(shaCandidate);
 
-    if (!initialRepoName) {
+    if (!initialRepo) {
       throw new Error('Repository not found');
     }
 
-    if (
-      !this.gitRepositoriesService.activeRepositories
-        .map(getRepositoryName)
-        .includes(initialRepoName)
-    ) {
-      throw new Error(
-        'Current repository is not active. Please activate it via the command palette'
-      );
-    }
-
     const restRepos = this.gitRepositoriesService.activeRepositories.filter(
-      (repo) => getRepositoryName(repo) !== initialRepoName
+      (repo) => getRepositoryName(repo) !== getRepositoryName(initialRepo)
     );
-    const commitDate = (
-      await this.repositoryGitService.getCommitInfo(
-        initialRepoName,
-        shaCandidate
-      )
-    ).authorDate;
-
-    this.repositoryGitService.goTo(initialRepoName, shaCandidate);
+    const commit = await initialRepo.getCommit(shaCandidate);
+    const commitDate = commit.commitDate;
+    initialRepo.checkout(shaCandidate);
 
     for (const repo of restRepos) {
-      const repoName = getRepositoryName(repo);
-
-      if (!repoName || !commitDate) {
+      if (!commitDate) {
         continue;
       }
 
-      const commit = await this.repositoryGitService.findClosestCommitByDate(
-        repoName,
-        commitDate
-      );
+      const commit = await this.findClosestCommitByDate(repo, commitDate);
 
       if (commit) {
-        this.repositoryGitService.goTo(repoName, commit.hash);
+        repo.checkout(commit.hash);
       }
     }
   }
 
-  checkoutToDefaultBranch() {
-    this.checkoutInEachRepository(this.settingsService.defaultBranchName);
+  private async findClosestCommitByDate(repo: Repository, date: Date) {
+    let minDifference = Number.MAX_SAFE_INTEGER;
+    let minDifferenceCommit = null;
+
+    if (!repo) {
+      throw new Error('Repository not found');
+    }
+
+    const commits = await repo.log({
+      maxEntries: Number.MAX_SAFE_INTEGER,
+      sortByAuthorDate: true,
+    });
+
+    for (const commit of commits) {
+      if (!commit.commitDate) {
+        continue;
+      }
+
+      const currentDifference = commit.commitDate.getTime() - date.getTime();
+
+      if (currentDifference < 0) {
+        break;
+      }
+
+      if (currentDifference <= minDifference && currentDifference >= 0) {
+        minDifference = currentDifference;
+        minDifferenceCommit = commit;
+      }
+    }
+
+    if (minDifference === Infinity) {
+      return null;
+    }
+
+    return minDifferenceCommit;
   }
 
   async checkout() {
@@ -162,7 +182,7 @@ export class GitCheckoutFeatureService extends ExtensionSubscription {
     }
 
     if (result === CheckoutType.DefaultBranch) {
-      this.checkoutToDefaultBranch();
+      this.checkoutInEachRepository(this.settingsService.defaultBranchName);
       return;
     }
   }

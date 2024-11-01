@@ -1,16 +1,12 @@
 import { injectable } from '@wroud/di';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
 import vscode from 'vscode';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
+@injectable(() => [GitRepositoriesService])
 export class GitDeleteTagFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
-  ) {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.deleteTag = this.deleteTag.bind(this);
   }
@@ -42,8 +38,7 @@ export class GitDeleteTagFeatureService extends ExtensionSubscription {
         continue;
       }
 
-      const currentBranch =
-        this.repositoryGitService.getCurrentBranch(repoName);
+      const currentBranch = repo.state.HEAD;
 
       if (currentBranch?.name === tagName) {
         vscode.window.showErrorMessage(
@@ -52,7 +47,7 @@ export class GitDeleteTagFeatureService extends ExtensionSubscription {
         continue;
       }
 
-      this.repositoryGitService.deleteTag(repoName, tagName);
+      repo.deleteTag(tagName);
     }
   }
 }

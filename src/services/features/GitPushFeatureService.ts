@@ -1,16 +1,11 @@
 import { injectable } from '@wroud/di';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import vscode from 'vscode';
 import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
+@injectable(() => [GitRepositoriesService])
 export class GitPushFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
-  ) {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.push = this.push.bind(this);
   }
@@ -30,13 +25,7 @@ export class GitPushFeatureService extends ExtensionSubscription {
 
     if (answer === 'Yes') {
       for (const repo of this.gitRepositoriesService.activeRepositories) {
-        const name = getRepositoryName(repo);
-
-        if (!name) {
-          continue;
-        }
-
-        this.repositoryGitService.push(name);
+        repo.push();
       }
     }
   }

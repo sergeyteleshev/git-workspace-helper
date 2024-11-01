@@ -1,18 +1,14 @@
 import { injectable } from '@wroud/di';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
 import vscode from 'vscode';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
+@injectable(() => [GitRepositoriesService])
 export class GitCreateTagFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
-  ) {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.createTag = this.createTag.bind(this);
   }
@@ -50,24 +46,29 @@ export class GitCreateTagFeatureService extends ExtensionSubscription {
       return;
     }
 
-    for (const repoName of destinationReposNames) {
-      if (!repoName) {
-        continue;
-      }
+    const destReposNamesSet = new Set(destinationReposNames);
 
-      const upstream =
-        await this.repositoryGitService.getCurrentUpstream(repoName);
+    const repos = this.gitRepositoriesService.activeRepositories.filter(
+      (repo) => {
+        const name = getRepositoryName(repo);
+
+        if (!isNotNullDefined(name)) {
+          return false;
+        }
+
+        return destReposNamesSet.has(name);
+      }
+    );
+
+    for (const repo of repos) {
+      const upstream = repo.state.HEAD?.upstream;
 
       if (!upstream) {
         continue;
       }
 
-      await this.repositoryGitService.createTag(
-        repoName,
-        tagName,
-        upstream.name
-      );
-      await this.repositoryGitService.goTo(repoName, tagName);
+      await repo.tag(tagName, upstream.name);
+      repo.checkout(tagName);
     }
   }
 }
