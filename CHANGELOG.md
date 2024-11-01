@@ -3,6 +3,7 @@
 ### 0.2.7
 
 - Added "Fetch" feature
+- Removed GitRepositoryService layer (refactor)
 
 ### 0.2.6
 
