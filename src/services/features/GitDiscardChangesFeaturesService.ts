@@ -43,7 +43,7 @@ export class GitDiscardChangesFeaturesService extends CommandService {
           .filter((path) => typeof path === 'string');
         const unstagedAll = [...new Set([...unstaged, ...unstagedRenamed])];
 
-        await repo.clean(unstagedAll);
+        repo.clean(unstagedAll);
       }
     }
   }

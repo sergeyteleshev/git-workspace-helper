@@ -30,7 +30,7 @@ export class GitStageChangesFeatureService extends CommandService {
         .filter((path) => typeof path === 'string');
       const unstagedAll = [...new Set([...unstaged, ...unstagedRenamed])];
 
-      await repo.add(unstagedAll);
+      repo.add(unstagedAll);
     }
   }
 }

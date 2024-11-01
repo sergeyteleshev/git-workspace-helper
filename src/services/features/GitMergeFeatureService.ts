@@ -34,13 +34,7 @@ export class GitMergeFeatureService extends CommandService {
       }
 
       try {
-        const branch = await repo.getBranch(branchName);
-
-        if (!branch.name) {
-          return;
-        }
-
-        await repo.merge(branch.name);
+        repo.merge(branchName);
       } catch {}
     }
   }
