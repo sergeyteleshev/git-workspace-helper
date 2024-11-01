@@ -1,8 +1,12 @@
-import './services/module.js';
+import './services/base/module.js';
+import './services/git/module.js';
+import './services/settings/module.js';
+import './services/features/module.js';
+
 import vscode from 'vscode';
 import { ModuleRegistry, ServiceContainerBuilder } from '@wroud/di';
 import { IExtensionContext } from './IExtensionContext.js';
-import { ExtensionSubscription } from './services/base/ExtensionSubscription.js';
+import { CommandService } from './services/base/CommandService.js';
 
 export async function activate(context: vscode.ExtensionContext) {
   if (!vscode.workspace.workspaceFolders?.length) {
@@ -19,9 +23,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const serviceProvider = builder.build();
 
-  for (const subscription of serviceProvider.getServices(
-    ExtensionSubscription
-  )) {
+  for (const subscription of serviceProvider.getServices(CommandService)) {
     await subscription.activate();
   }
 

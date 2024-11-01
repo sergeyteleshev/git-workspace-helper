@@ -1,11 +1,11 @@
 import { injectable } from '@wroud/di';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 import vscode from 'vscode';
 
 @injectable(() => [GitRepositoriesService])
-export class GitDeleteTagFeatureService extends ExtensionSubscription {
+export class GitDeleteTagFeatureService extends CommandService {
   constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.deleteTag = this.deleteTag.bind(this);

@@ -4,7 +4,7 @@ import { isSha } from '../../helpers/isSha.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { SettingsService } from '../settings/SettingsService.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 import { Repository } from '../../types/git.js';
 
 enum CheckoutType {
@@ -20,7 +20,7 @@ const CHECKOUT_OPTIONS: CheckoutType[] = [
 ];
 
 @injectable(() => [GitRepositoriesService, SettingsService])
-export class GitCheckoutFeatureService extends ExtensionSubscription {
+export class GitCheckoutFeatureService extends CommandService {
   constructor(
     private readonly gitRepositoriesService: GitRepositoriesService,
     private readonly settingsService: SettingsService

@@ -4,10 +4,10 @@ import vscode from 'vscode';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
 import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
 import { injectable } from '@wroud/di';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 
 @injectable(() => [GitRepositoriesService])
-export class ConfigureActiveRepositoriesFeatureService extends ExtensionSubscription {
+export class ConfigureActiveRepositoriesFeatureService extends CommandService {
   constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.configureActiveRepositories =

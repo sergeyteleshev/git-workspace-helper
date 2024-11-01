@@ -4,10 +4,10 @@ import vscode from 'vscode';
 import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 
 @injectable(() => [GitRepositoriesService])
-export class GitCreateBranchFeatureService extends ExtensionSubscription {
+export class GitCreateBranchFeatureService extends CommandService {
   constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.createBranches = this.createBranches.bind(this);

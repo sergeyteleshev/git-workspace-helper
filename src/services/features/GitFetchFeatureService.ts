@@ -1,10 +1,10 @@
 import { injectable } from '@wroud/di';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 import vscode from 'vscode';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 
 @injectable(() => [GitRepositoriesService])
-export class GitFetchFeatureService extends ExtensionSubscription {
+export class GitFetchFeatureService extends CommandService {
   constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.fetch = this.fetch.bind(this);
