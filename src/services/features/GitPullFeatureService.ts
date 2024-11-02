@@ -1,16 +1,12 @@
 import { injectable } from '@wroud/di';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
 import { getRepositoryName } from '../../helpers/getRepositoryName.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 import vscode from 'vscode';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitPullFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
-  ) {
+@injectable(() => [GitRepositoriesService])
+export class GitPullFeatureService extends CommandService {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.pull = this.pull.bind(this);
   }
@@ -27,7 +23,7 @@ export class GitPullFeatureService extends ExtensionSubscription {
         continue;
       }
 
-      this.repositoryGitService.pull(name);
+      repo.pull();
     }
   }
 }

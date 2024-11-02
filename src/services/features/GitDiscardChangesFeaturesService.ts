@@ -1,17 +1,14 @@
-// DiscardChangesFeaturesService.ts
-
 import { injectable } from '@wroud/di';
 import vscode from 'vscode';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
+import { GitUnstageChangesFeatureService } from './GitUnstageChangesFeatureService.js';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitDiscardChangesFeaturesService extends ExtensionSubscription {
+@injectable(() => [GitRepositoriesService, GitUnstageChangesFeatureService])
+export class GitDiscardChangesFeaturesService extends CommandService {
   constructor(
     private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
+    private readonly gitUnstageChangesFeatureService: GitUnstageChangesFeatureService
   ) {
     super();
     this.discardChanges = this.discardChanges.bind(this);
@@ -32,13 +29,21 @@ export class GitDiscardChangesFeaturesService extends ExtensionSubscription {
 
     if (shouldDelete === 'Yes') {
       for (const repo of this.gitRepositoriesService.activeRepositories) {
-        const name = getRepositoryName(repo);
-
-        if (!name) {
-          continue;
+        if (!repo) {
+          throw new Error('Repository not found');
         }
 
-        this.repositoryGitService.discardChanges(name);
+        await this.gitUnstageChangesFeatureService.unstage(repo);
+
+        const unstaged = repo.state.workingTreeChanges.map(
+          (change) => change.uri.fsPath
+        );
+        const unstagedRenamed = repo.state.workingTreeChanges
+          .map((change) => change.renameUri?.fsPath)
+          .filter((path) => typeof path === 'string');
+        const unstagedAll = [...new Set([...unstaged, ...unstagedRenamed])];
+
+        repo.clean(unstagedAll);
       }
     }
   }

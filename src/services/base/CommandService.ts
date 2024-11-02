@@ -1,5 +1,5 @@
 import { Service } from '@wroud/di';
 
-export abstract class ExtensionSubscription extends Service {
+export abstract class CommandService extends Service {
   abstract activate(): Promise<void>;
 }

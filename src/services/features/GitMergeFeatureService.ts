@@ -1,16 +1,11 @@
 import { injectable } from '@wroud/di';
 import vscode from 'vscode';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitMergeFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
-  ) {
+@injectable(() => [GitRepositoriesService])
+export class GitMergeFeatureService extends CommandService {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.merge = this.merge.bind(this);
   }
@@ -32,14 +27,14 @@ export class GitMergeFeatureService extends ExtensionSubscription {
     }
 
     for (const repo of this.gitRepositoriesService.activeRepositories) {
-      const name = getRepositoryName(repo);
+      const currentBranchName = repo.state.HEAD?.name;
 
-      if (!name) {
-        continue;
+      if (currentBranchName === branchName) {
+        return;
       }
 
       try {
-        this.repositoryGitService.merge(name, branchName);
+        repo.merge(branchName);
       } catch {}
     }
   }

@@ -1,16 +1,11 @@
 import { injectable } from '@wroud/di';
 import vscode from 'vscode';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitCommitFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
-  ) {
+@injectable(() => [GitRepositoriesService])
+export class GitCommitFeatureService extends CommandService {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.commit = this.commit.bind(this);
   }
@@ -32,13 +27,7 @@ export class GitCommitFeatureService extends ExtensionSubscription {
     }
 
     for (const repo of this.gitRepositoriesService.activeRepositories) {
-      const repoName = getRepositoryName(repo);
-
-      if (!repoName) {
-        continue;
-      }
-
-      this.repositoryGitService.commit(repoName, commitName);
+      repo.commit(commitName);
     }
   }
 }

@@ -1,16 +1,11 @@
 import { injectable } from '@wroud/di';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
 import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
-import { GitRepositoryService } from '../git/GitRepositoryService.js';
-import { ExtensionSubscription } from '../base/ExtensionSubscription.js';
+import { CommandService } from '../base/CommandService.js';
 import vscode from 'vscode';
 
-@injectable(() => [GitRepositoriesService, GitRepositoryService])
-export class GitStageChangesFeatureService extends ExtensionSubscription {
-  constructor(
-    private readonly gitRepositoriesService: GitRepositoriesService,
-    private readonly repositoryGitService: GitRepositoryService
-  ) {
+@injectable(() => [GitRepositoriesService])
+export class GitStageChangesFeatureService extends CommandService {
+  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
     super();
     this.stageChanges = this.stageChanges.bind(this);
   }
@@ -24,13 +19,18 @@ export class GitStageChangesFeatureService extends ExtensionSubscription {
 
   async stageChanges() {
     for (const repo of this.gitRepositoriesService.activeRepositories) {
-      const name = getRepositoryName(repo);
-
-      if (!name) {
-        continue;
+      if (!repo) {
+        throw new Error('Repository not found');
       }
 
-      this.repositoryGitService.stageChanges(name);
+      const diffWithIndexHead = await repo.diffIndexWithHEAD();
+      const unstaged = diffWithIndexHead.map((change) => change.uri.fsPath);
+      const unstagedRenamed = diffWithIndexHead
+        .map((change) => change.renameUri?.fsPath)
+        .filter((path) => typeof path === 'string');
+      const unstagedAll = [...new Set([...unstaged, ...unstagedRenamed])];
+
+      repo.add(unstagedAll);
     }
   }
 }
