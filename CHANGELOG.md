@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.2.8
+
+- Added "Create Remote" feature
+- Added "Delete Remote" feature
+
 ### 0.2.7
 
 - Added "Fetch" feature
