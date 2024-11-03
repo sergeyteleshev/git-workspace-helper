@@ -1,14 +1,13 @@
 import { injectable } from '@wroud/di';
-import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import vscode from 'vscode';
-import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
-import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
 import { CommandService } from '../base/CommandService.js';
+import { PickRepositoriesService } from '../ui/PickRepositoriesService.js';
 
-@injectable(() => [GitRepositoriesService])
+@injectable(() => [PickRepositoriesService])
 export class GitCreateBranchFeatureService extends CommandService {
-  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
+  constructor(
+    private readonly pickRepositoriesService: PickRepositoriesService
+  ) {
     super();
     this.createBranches = this.createBranches.bind(this);
   }
@@ -30,34 +29,11 @@ export class GitCreateBranchFeatureService extends CommandService {
       return;
     }
 
-    const quickPick = new CustomQuickPick();
+    const repos = await this.pickRepositoriesService.pickRepositories();
 
-    const activeReposNames = this.gitRepositoriesService.activeRepositories
-      .map(getRepositoryName)
-      .filter(isNotNullDefined);
-
-    quickPick
-      .selectMany()
-      .setItems(activeReposNames.map((name) => ({ label: name })));
-
-    const destinationRepos = await quickPick.show();
-    const destinationReposSet = new Set(destinationRepos);
-
-    if (!isNotNullDefined(destinationRepos)) {
+    if (!repos) {
       return;
     }
-
-    const repos = this.gitRepositoriesService.activeRepositories.filter(
-      (repo) => {
-        const name = getRepositoryName(repo);
-
-        if (!name) {
-          return false;
-        }
-
-        return destinationReposSet.has(name);
-      }
-    );
 
     for (const repo of repos) {
       repo.createBranch(newBranchName, true);

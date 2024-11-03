@@ -1,14 +1,14 @@
 import { injectable } from '@wroud/di';
-import { GitRepositoriesService } from '../git/GitRepositoriesService.js';
 import { CommandService } from '../base/CommandService.js';
 import vscode from 'vscode';
-import { getRepositoryName } from '../../helpers/getRepositoryName.js';
-import { CustomQuickPick } from '../../ui/CustomQuickPick.js';
+import { PickRepositoriesService } from '../ui/PickRepositoriesService.js';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
 
-@injectable(() => [GitRepositoriesService])
+@injectable(() => [PickRepositoriesService])
 export class GitCreateTagFeatureService extends CommandService {
-  constructor(private readonly gitRepositoriesService: GitRepositoriesService) {
+  constructor(
+    private readonly pickRepositoriesService: PickRepositoriesService
+  ) {
     super();
     this.createTag = this.createTag.bind(this);
   }
@@ -30,35 +30,11 @@ export class GitCreateTagFeatureService extends CommandService {
       return;
     }
 
-    const quickPick = new CustomQuickPick();
+    const repos = await this.pickRepositoriesService.pickRepositories();
 
-    const activeReposNames = this.gitRepositoriesService.activeRepositories
-      .map(getRepositoryName)
-      .filter(isNotNullDefined);
-
-    quickPick
-      .selectMany()
-      .setItems(activeReposNames.map((name) => ({ label: name })));
-
-    const destinationReposNames = await quickPick.show();
-
-    if (!isNotNullDefined(destinationReposNames)) {
+    if (!isNotNullDefined(repos)) {
       return;
     }
-
-    const destReposNamesSet = new Set(destinationReposNames);
-
-    const repos = this.gitRepositoriesService.activeRepositories.filter(
-      (repo) => {
-        const name = getRepositoryName(repo);
-
-        if (!isNotNullDefined(name)) {
-          return false;
-        }
-
-        return destReposNamesSet.has(name);
-      }
-    );
 
     for (const repo of repos) {
       const upstream = repo.state.HEAD?.upstream;
