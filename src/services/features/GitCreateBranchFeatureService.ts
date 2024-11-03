@@ -29,7 +29,8 @@ export class GitCreateBranchFeatureService extends CommandService {
       return;
     }
 
-    const repos = await this.pickRepositoriesService.pickRepositories();
+    const repos =
+      await this.pickRepositoriesService.pickRepositoriesFromActive();
 
     if (!repos) {
       return;

@@ -30,7 +30,8 @@ export class GitCreateTagFeatureService extends CommandService {
       return;
     }
 
-    const repos = await this.pickRepositoriesService.pickRepositories();
+    const repos =
+      await this.pickRepositoriesService.pickRepositoriesFromActive();
 
     if (!isNotNullDefined(repos)) {
       return;
