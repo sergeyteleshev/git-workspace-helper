@@ -15,6 +15,8 @@ import { GitStageChangesFeatureService } from './GitStageChangesFeatureService.j
 import { GitUnstageChangesFeatureService } from './GitUnstageChangesFeatureService.js';
 import { SingleServiceImplementation } from '@wroud/di/types';
 import { GitCommitFeatureService } from './GitCommitFeatureService.js';
+import { CreateRemoteFeatureService } from './CreateRemoteFeatureService.js';
+import { DeleteRemoteFeatureService } from './DeleteRemoteFeatureService.js';
 
 const SERVICES: SingleServiceImplementation<CommandService>[] = [
   GitCheckoutFeatureService,
@@ -31,6 +33,8 @@ const SERVICES: SingleServiceImplementation<CommandService>[] = [
   GitCreateTagFeatureService,
   GitDeleteTagFeatureService,
   GitFetchFeatureService,
+  CreateRemoteFeatureService,
+  DeleteRemoteFeatureService,
 ];
 
 ModuleRegistry.add({

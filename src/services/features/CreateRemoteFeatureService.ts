@@ -5,28 +5,37 @@ import { PickRepositoriesService } from '../ui/PickRepositoriesService.js';
 import { isNotNullDefined } from '../../helpers/isNotNullDefined.js';
 
 @injectable(() => [PickRepositoriesService])
-export class GitCreateTagFeatureService extends CommandService {
+export class CreateRemoteFeatureService extends CommandService {
   constructor(
     private readonly pickRepositoriesService: PickRepositoriesService
   ) {
     super();
-    this.createTag = this.createTag.bind(this);
+    this.createRemote = this.createRemote.bind(this);
   }
 
-  async activate(): Promise<void> {
+  async activate() {
     vscode.commands.registerCommand(
-      'git-workspace-helper.createTag',
-      this.createTag
+      'git-workspace-helper.createRemote',
+      this.createRemote
     );
   }
 
-  async createTag() {
-    const tagName = await vscode.window.showInputBox({
-      placeHolder: 'Enter tag name',
-      title: 'Tag name',
+  async createRemote() {
+    const remoteName = await vscode.window.showInputBox({
+      placeHolder: 'Enter remote name',
+      title: 'Remote name',
     });
 
-    if (!tagName) {
+    if (!remoteName) {
+      return;
+    }
+
+    const url = await vscode.window.showInputBox({
+      placeHolder: 'Enter remote URL',
+      title: 'Remote URL',
+    });
+
+    if (!url) {
       return;
     }
 
@@ -38,14 +47,7 @@ export class GitCreateTagFeatureService extends CommandService {
     }
 
     for (const repo of repos) {
-      const upstream = repo.state.HEAD?.upstream;
-
-      if (!upstream) {
-        continue;
-      }
-
-      await repo.tag(tagName, upstream.name);
-      repo.checkout(tagName);
+      repo.addRemote(remoteName, url);
     }
   }
 }

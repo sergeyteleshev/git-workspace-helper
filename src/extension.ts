@@ -2,6 +2,7 @@ import './services/base/module.js';
 import './services/git/module.js';
 import './services/settings/module.js';
 import './services/features/module.js';
+import './services/ui/module.js';
 
 import vscode from 'vscode';
 import { ModuleRegistry, ServiceContainerBuilder } from '@wroud/di';

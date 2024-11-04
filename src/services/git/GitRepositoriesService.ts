@@ -97,6 +97,25 @@ export class GitRepositoriesService {
     return Array.from(new Set(allBranchesNames));
   }
 
+  async getRemotesNames(): Promise<string[]> {
+    const allRemotesNames: string[] = [];
+
+    for (const repo of this.activeRepositories) {
+      const name = getRepositoryName(repo);
+
+      if (!name) {
+        continue;
+      }
+
+      const remotes = repo.state.remotes;
+      const remotesNames = remotes.map((remote) => remote.name);
+
+      allRemotesNames.push(...remotesNames);
+    }
+
+    return Array.from(new Set(allRemotesNames));
+  }
+
   get activeRepositories() {
     const names = new Set(
       this.workspaceCacheService.get<string[]>(ACTIVE_REPOSITORIES_CACHE_KEY) ??

@@ -3,7 +3,7 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -57,6 +57,16 @@
         "icon": "$(tag-remove)"
       },
       {
+        "command": "git-workspace-helper.createRemote",
+        "title": "Git Workspace Helper: Create Remote",
+        "icon": "$(remote)"
+      },
+      {
+        "command": "git-workspace-helper.deleteRemote",
+        "title": "Git Workspace Helper: Delete Remote",
+        "icon": "$(remote)"
+      },
+      {
         "command": "git-workspace-helper.fetch",
         "title": "Git Workspace Helper: Fetch All",
         "icon": "$(repo-sync)"
@@ -106,6 +116,10 @@
         "label": "Changes"
       },
       {
+        "id": "gwh:remotes",
+        "label": "Remotes"
+      },
+      {
         "id": "gwh:settings",
         "label": "Settings"
       }
@@ -128,6 +142,16 @@
       "gwh:settings": [
         {
           "command": "git-workspace-helper.configureActiveRepositories",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "gwh:remotes": [
+        {
+          "command": "git-workspace-helper.createRemote",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.deleteRemote",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         }
       ],
@@ -164,6 +188,9 @@
         },
         {
           "submenu": "gwh:changes"
+        },
+        {
+          "submenu": "gwh:remotes"
         },
         {
           "submenu": "gwh:settings"
