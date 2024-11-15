@@ -89,7 +89,10 @@
       {
         "command": "git-workspace-helper.stashChanges",
         "title": "Git Workspace Helper: Stash Changes",
-        "icon": "$(discard)"
+        "icon": {
+          "dark": "./images/dark/git-stash-add.svg",
+          "light": "./images/light/git-stash-add.svg"
+        }
       },
       {
         "command": "git-workspace-helper.applyPopStash",
