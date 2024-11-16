@@ -4,6 +4,7 @@
 
 - Added "Stash Changes" feature
 - Added "Apply Stash" feature
+- Added "Drop Stash" feature
 
 ### 0.2.8
 

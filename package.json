@@ -123,15 +123,15 @@
     "submenus": [
       {
         "id": "gwh:stash",
-        "label": "Stashes"
+        "label": "Stash"
       },
       {
         "id": "gwh:branches",
-        "label": "Branches"
+        "label": "Branch"
       },
       {
         "id": "gwh:tags",
-        "label": "Tags"
+        "label": "Tag"
       },
       {
         "id": "gwh:changes",
@@ -139,7 +139,7 @@
       },
       {
         "id": "gwh:remotes",
-        "label": "Remotes"
+        "label": "Remote"
       },
       {
         "id": "gwh:settings",
