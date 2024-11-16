@@ -21,6 +21,9 @@
 - Pull All - Pulls coming code in each repository
 - Create branch - Creates new branch for for all selected repositories
 - Delete branch - Deletes branch for all selected repositories
+- Stash Changes - Stashes changes in each repository
+- Apply Stash - Applies/pops stash in each repository
+- Drop Stash - Drops stash in each repository
 - Configure Active Repositories - Sets active repositories which will be used for other listed commands. By default all repositories in workspace are selected
 - Checkout To Commit - switches repository to the specific commit + switches other repositories to the closest by the date commits.
 - Checkout To Branch - switches repository to the specific branch. If branch is not found it stays as it is.

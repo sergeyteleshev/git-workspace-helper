@@ -3,7 +3,7 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -87,6 +87,24 @@
         "icon": "$(diff-remove)"
       },
       {
+        "command": "git-workspace-helper.stashChanges",
+        "title": "Git Workspace Helper: Stash Changes",
+        "icon": {
+          "dark": "./images/dark/git-stash-add.svg",
+          "light": "./images/light/git-stash-add.svg"
+        }
+      },
+      {
+        "command": "git-workspace-helper.dropStash",
+        "title": "Git Workspace Helper: Drop Stash",
+        "icon": "$(inbox)"
+      },
+      {
+        "command": "git-workspace-helper.applyPopStash",
+        "title": "Git Workspace Helper: Apply Stash",
+        "icon": "$(inbox)"
+      },
+      {
         "command": "git-workspace-helper.commit",
         "title": "Git Workspace Helper: Commit Changes",
         "icon": "$(notebook-state-success)"
@@ -104,6 +122,18 @@
     ],
     "submenus": [
       {
+        "id": "gwh:commit",
+        "label": "Commit"
+      },
+      {
+        "id": "gwh:pull-push",
+        "label": "Pull, Push"
+      },
+      {
+        "id": "gwh:stash",
+        "label": "Stash"
+      },
+      {
         "id": "gwh:branches",
         "label": "Branch"
       },
@@ -117,7 +147,7 @@
       },
       {
         "id": "gwh:remotes",
-        "label": "Remotes"
+        "label": "Remote"
       },
       {
         "id": "gwh:settings",
@@ -125,6 +155,36 @@
       }
     ],
     "menus": {
+      "gwh:commit": [
+        {
+          "command": "git-workspace-helper.commit",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "gwh:pull-push": [
+        {
+          "command": "git-workspace-helper.pull",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.push",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "gwh:stash": [
+        {
+          "command": "git-workspace-helper.stashChanges",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.applyPopStash",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.dropStash",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
       "gwh:branches": [
         {
           "command": "git-workspace-helper.createBranch",
@@ -181,6 +241,15 @@
       ],
       "scm/title": [
         {
+          "submenu": "gwh:commit"
+        },
+        {
+          "submenu": "gwh:pull-push"
+        },
+        {
+          "submenu": "gwh:stash"
+        },
+        {
           "submenu": "gwh:branches"
         },
         {
@@ -217,6 +286,11 @@
         },
         {
           "command": "git-workspace-helper.commit",
+          "group": "navigation",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.stashChanges",
           "group": "navigation",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         }
@@ -259,12 +333,14 @@
     "eslint": "^8.57.0",
     "npm-run-all": "^4.1.5",
     "prettier": "3.3.3",
+    "@wroud/di-tools-analyzer": "^0.2.1",
     "typescript": "^5.4.5"
   },
   "extensionDependencies": [
     "vscode.git"
   ],
   "dependencies": {
-    "@wroud/di": "^0.12.0"
+    "@wroud/di": "^0.12.0",
+    "simple-git": "^3.27.0"
   }
 }
