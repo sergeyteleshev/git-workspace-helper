@@ -95,6 +95,11 @@
         }
       },
       {
+        "command": "git-workspace-helper.dropStash",
+        "title": "Git Workspace Helper: Drop Stash",
+        "icon": "$(inbox)"
+      },
+      {
         "command": "git-workspace-helper.applyPopStash",
         "title": "Git Workspace Helper: Apply Stash",
         "icon": "$(inbox)"
@@ -149,6 +154,10 @@
         },
         {
           "command": "git-workspace-helper.applyPopStash",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.dropStash",
           "when": "workspaceFolderCount > 1 && !scmProvider"
         }
       ],

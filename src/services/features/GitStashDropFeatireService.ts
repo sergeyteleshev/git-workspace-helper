@@ -5,43 +5,26 @@ import { SimpleGitRepositoriesService } from '../git/SimpleGitRepositoriesServic
 import { hasNoStashCollision } from '../../helpers/hasStashCollision.js';
 import { PickStashService } from '../ui/PickStashService.js';
 
-enum StashAction {
-  Pop = 'Pop',
-  Apply = 'Apply',
-}
-
 @injectable(() => [SimpleGitRepositoriesService, PickStashService])
-export class GitApplyPopStashFeatureService extends CommandService {
+export class GitStashDropFeatureService extends CommandService {
   constructor(
     private readonly simpleGitRepositoriesService: SimpleGitRepositoriesService,
     private readonly pickStashService: PickStashService
   ) {
     super();
-    this.applyStash = this.applyStash.bind(this);
+    this.dropStash = this.dropStash.bind(this);
   }
 
   async activate() {
     vscode.commands.registerCommand(
-      'git-workspace-helper.applyPopStash',
-      this.applyStash
+      'git-workspace-helper.dropStash',
+      this.dropStash
     );
   }
 
-  private async applyStash() {
-    const action = await vscode.window.showQuickPick(
-      [StashAction.Apply, StashAction.Pop],
-      {
-        title: 'Stash type',
-        placeHolder: 'Select stash action',
-      }
-    );
-
-    if (!action) {
-      return;
-    }
-
+  private async dropStash() {
     const selectedStash = await this.pickStashService.pickStash({
-      title: `${action} stash`,
+      title: 'Drop stash',
       placeHolder: 'Select stash',
     });
 
@@ -63,11 +46,7 @@ export class GitApplyPopStashFeatureService extends CommandService {
         continue;
       }
 
-      repo.stash([
-        action === StashAction.Pop ? 'pop' : 'apply',
-        '--index',
-        stash.index.toString(),
-      ]);
+      repo.stash(['drop', stash.index.toString()]);
     }
   }
 }
