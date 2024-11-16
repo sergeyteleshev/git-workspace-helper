@@ -45,8 +45,8 @@ export class SimpleGitRepositoriesService {
   }
 
   async getStashesWithoutCollisions() {
-    // TODO do it algorithmically right
     const stashes = await this.getStashes();
+
     return stashes.filter((stash1, index) => {
       return !stashes.some(
         (stash2, index2) =>
