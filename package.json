@@ -122,6 +122,14 @@
     ],
     "submenus": [
       {
+        "id": "gwh:commit",
+        "label": "Commit"
+      },
+      {
+        "id": "gwh:pull-push",
+        "label": "Pull, Push"
+      },
+      {
         "id": "gwh:stash",
         "label": "Stash"
       },
@@ -147,6 +155,22 @@
       }
     ],
     "menus": {
+      "gwh:commit": [
+        {
+          "command": "git-workspace-helper.commit",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
+      "gwh:pull-push": [
+        {
+          "command": "git-workspace-helper.pull",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        },
+        {
+          "command": "git-workspace-helper.push",
+          "when": "workspaceFolderCount > 1 && !scmProvider"
+        }
+      ],
       "gwh:stash": [
         {
           "command": "git-workspace-helper.stashChanges",
@@ -216,6 +240,12 @@
         }
       ],
       "scm/title": [
+        {
+          "submenu": "gwh:commit"
+        },
+        {
+          "submenu": "gwh:pull-push"
+        },
         {
           "submenu": "gwh:stash"
         },
