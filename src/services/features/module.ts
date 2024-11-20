@@ -1,4 +1,4 @@
-import { ModuleRegistry } from '@wroud/di';
+import { ModuleRegistry, proxy } from '@wroud/di';
 import { CommandService } from '../base/CommandService.js';
 import { ConfigureActiveRepositoriesFeatureService } from './ConfigureActiveRepositoriesFeatureService.js';
 import { GitCheckoutFeatureService } from './GitCheckoutFeatureService.js';
@@ -48,9 +48,7 @@ ModuleRegistry.add({
   async configure(serviceCollection) {
     SERVICES.forEach((service) => {
       serviceCollection.addTransient(service);
-      serviceCollection.addTransient(CommandService, (provider) =>
-        provider.getService(service)
-      );
+      serviceCollection.addTransient(CommandService, proxy(service));
     });
   },
 });

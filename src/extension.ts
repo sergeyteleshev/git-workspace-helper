@@ -8,7 +8,10 @@ import vscode from 'vscode';
 import { ModuleRegistry, ServiceContainerBuilder } from '@wroud/di';
 import { IExtensionContext } from './IExtensionContext.js';
 import { CommandService } from './services/base/CommandService.js';
-
+import {
+  getDependenciesGraph,
+  ServiceCollectionProxy,
+} from '@wroud/di-tools-analyzer';
 export async function activate(context: vscode.ExtensionContext) {
   if (!vscode.workspace.workspaceFolders?.length) {
     return;
@@ -23,6 +26,12 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   const serviceProvider = builder.build();
+
+  const builderProxy = new ServiceCollectionProxy(builder);
+  const data = JSON.stringify(
+    await getDependenciesGraph(builder, builderProxy)
+  );
+  await vscode.env.clipboard.writeText(data);
 
   for (const subscription of serviceProvider.getServices(CommandService)) {
     await subscription.activate();
