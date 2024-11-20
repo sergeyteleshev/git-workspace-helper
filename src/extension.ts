@@ -8,10 +8,7 @@ import vscode from 'vscode';
 import { ModuleRegistry, ServiceContainerBuilder } from '@wroud/di';
 import { IExtensionContext } from './IExtensionContext.js';
 import { CommandService } from './services/base/CommandService.js';
-import {
-  getDependenciesGraph,
-  ServiceCollectionProxy,
-} from '@wroud/di-tools-analyzer';
+
 export async function activate(context: vscode.ExtensionContext) {
   if (!vscode.workspace.workspaceFolders?.length) {
     return;
