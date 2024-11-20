@@ -4,6 +4,7 @@
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
   "version": "1.0.0",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.92.0"
   },
