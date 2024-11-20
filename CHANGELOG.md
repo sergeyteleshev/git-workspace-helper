@@ -1,5 +1,12 @@
 # Change Log
 
+### 1.0.0
+
+- Updated all dependencies to the latest versions
+- Updated README
+- Added ability to work with multiple repositories in regular directory (not workspace)
+- Added MIT license
+
 ### 0.2.9
 
 - Added "Stash Changes" feature

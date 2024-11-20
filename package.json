@@ -3,7 +3,8 @@
   "name": "git-workspace-helper",
   "displayName": "Git Workspace Helper",
   "description": "Manage workspace repositories via git without routine using one command",
-  "version": "0.2.9",
+  "version": "1.0.0",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -158,85 +159,85 @@
       "gwh:commit": [
         {
           "command": "git-workspace-helper.commit",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "gwh:pull-push": [
         {
           "command": "git-workspace-helper.pull",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.push",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "gwh:stash": [
         {
           "command": "git-workspace-helper.stashChanges",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.applyPopStash",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.dropStash",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "gwh:branches": [
         {
           "command": "git-workspace-helper.createBranch",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.deleteBranch",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.merge",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "gwh:settings": [
         {
           "command": "git-workspace-helper.configureActiveRepositories",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "gwh:remotes": [
         {
           "command": "git-workspace-helper.createRemote",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.deleteRemote",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "gwh:tags": [
         {
           "command": "git-workspace-helper.createTag",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.deleteTag",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "gwh:changes": [
         {
           "command": "git-workspace-helper.discardChanges",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.stageChanges",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.unstageChanges",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ],
       "scm/title": [
@@ -267,32 +268,32 @@
         {
           "command": "git-workspace-helper.fetch",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.pull",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.push",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.checkout",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.commit",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         },
         {
           "command": "git-workspace-helper.stashChanges",
           "group": "navigation",
-          "when": "workspaceFolderCount > 1 && !scmProvider"
+          "when": "!scmProvider"
         }
       ]
     },
@@ -322,25 +323,25 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.7",
-    "@types/node": "20.x",
-    "@types/vscode": "^1.92.0",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "@typescript-eslint/parser": "^7.11.0",
-    "@vscode/test-cli": "^0.0.9",
+    "@types/mocha": "^10",
+    "@types/node": "^22",
+    "@types/vscode": "^1",
+    "@typescript-eslint/eslint-plugin": "^8",
+    "@typescript-eslint/parser": "^8",
+    "@vscode/test-cli": "^0",
     "@vscode/test-electron": "^2.4.0",
-    "esbuild": "^0.21.5",
-    "eslint": "^8.57.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "3.3.3",
-    "@wroud/di-tools-analyzer": "^0.2.1",
-    "typescript": "^5.4.5"
+    "esbuild": "^0",
+    "eslint": "^9",
+    "npm-run-all": "^4",
+    "prettier": "^3",
+    "@wroud/di-tools-analyzer": "^0",
+    "typescript": "^5"
   },
   "extensionDependencies": [
     "vscode.git"
   ],
   "dependencies": {
-    "@wroud/di": "^0.12.0",
-    "simple-git": "^3.27.0"
+    "@wroud/di": "^0",
+    "simple-git": "^3"
   }
 }

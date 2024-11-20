@@ -1,3 +1,8 @@
+# [Git Workspace Helper](https://marketplace.visualstudio.com/items?itemName=stelesh.git-workspace-helper)
+
+![Version](https://img.shields.io/github/package-json/v/sergeyteleshev/git-workspace-helper)
+![GitHub top language](https://img.shields.io/github/languages/top/sergeyteleshev/git-workspace-helper)
+
 ## How to use it
 
 #### UI:
@@ -6,12 +11,24 @@
 2. See the commands in the header ("..." - also here)
 3. Execute the one you need
 
+![ui feature preview](https://github.com/user-attachments/assets/4bdd915f-4a76-4d9c-b755-6b143503c053)
+
 #### Command palette:
 
 1. Open command palette (CMD/ctrl + shift + P)
 2. Type "gwh"
 3. See the available commands
 4. Execute the one you need
+
+![command palette feature preview](https://github.com/user-attachments/assets/eaf5aa32-5d4a-4cf9-8ee4-58b2b9e22ef0)
+
+#### Settings
+
+1. Go to VSCode settings
+2. Search for "git workspace helper"
+3. Configure the settings as you need
+
+![settings preview](https://github.com/user-attachments/assets/4cb52417-d018-422d-8db2-a5386a22f252)
 
 ## Features
 
