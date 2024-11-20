@@ -27,12 +27,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const serviceProvider = builder.build();
 
-  const builderProxy = new ServiceCollectionProxy(builder);
-  const data = JSON.stringify(
-    await getDependenciesGraph(builder, builderProxy)
-  );
-  await vscode.env.clipboard.writeText(data);
-
   for (const subscription of serviceProvider.getServices(CommandService)) {
     await subscription.activate();
   }
