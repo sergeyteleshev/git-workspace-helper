@@ -30,7 +30,7 @@ export class GitMergeFeatureService extends CommandService {
       const currentBranchName = repo.state.HEAD?.name;
 
       if (currentBranchName === branchName) {
-        return;
+        continue;
       }
 
       try {

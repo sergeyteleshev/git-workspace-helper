@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.0.1
+
+- Fixes "Merge to current branch" feature
+
 ### 1.0.0
 
 - Updated all dependencies to the latest versions
